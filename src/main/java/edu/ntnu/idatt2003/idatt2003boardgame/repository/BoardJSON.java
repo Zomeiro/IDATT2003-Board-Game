@@ -15,6 +15,7 @@ import edu.ntnu.idatt2003.idatt2003boardgame.model.effect.Effect;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.effect.LadderEffect;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.effect.SkipTurnEffect;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.effect.SnakeEffect;
+import edu.ntnu.idatt2003.idatt2003boardgame.model.effect.PlaceholderEffect;
 
 public class BoardJSON {
 

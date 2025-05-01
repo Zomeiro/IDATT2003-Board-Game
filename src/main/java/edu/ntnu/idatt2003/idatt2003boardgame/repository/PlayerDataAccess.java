@@ -1,43 +1,58 @@
 package edu.ntnu.idatt2003.idatt2003boardgame.repository;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
-
-import com.opencsv.CSVReader;
-import com.opencsv.CSVWriter;
 
 import javafx.scene.image.Image;
 
+
 public class PlayerDataAccess extends PlayerCSV {
-    private final String ICON_RELATIVE_PATH = "/PlayerIcons/";
+    // This path must match the resource location inside src/main/resources
+    private final String ICON_RELATIVE_PATH = "/edu/ntnu/idatt2003/idatt2003boardgame/PlayerIcons/";
+
     public PlayerDataAccess() {
         super();
     }
 
     public ArrayList<String> getIconNames() {
         ArrayList<String> iconFileNames = new ArrayList<>();
-        String directoryPath = "src/main/resources/PlayerIcons/";
-        File dir = new File(directoryPath);
+        URL dirURL = getClass().getResource(ICON_RELATIVE_PATH);
+        
+        if (dirURL == null) {
+            System.err.println("Icon resource folder not found: " + ICON_RELATIVE_PATH);
+            return iconFileNames;
+        }
+
+        File dir;
+        try {
+            dir = new File(dirURL.toURI());
+        } catch (URISyntaxException e) {
+            System.err.println("Invalid URI for icon folder: " + e.getMessage());
+            return iconFileNames;
+        }
 
         if (dir.isDirectory()) {
             File[] files = dir.listFiles();
             if (files != null) {
                 for (File file : files) {
-                    iconFileNames.add(file.getName());
+                    if (file.isFile()) {
+                        iconFileNames.add(file.getName());
+                    }
                 }
             }
-            return iconFileNames;
         } else {
-            System.out.println("Not a directory: " + directoryPath);
-            return null;
+            System.err.println("Not a directory: " + dir.getAbsolutePath());
         }
+        return iconFileNames;
     }
+    
     public Image getImageFromFileName(String fileName) {
         String resourcePath = ICON_RELATIVE_PATH + fileName;
+        if (getClass().getResourceAsStream(resourcePath) == null) {
+            throw new IllegalArgumentException("Icon not found: " + resourcePath);
+        }
         return new Image(getClass().getResourceAsStream(resourcePath));
     }
 }

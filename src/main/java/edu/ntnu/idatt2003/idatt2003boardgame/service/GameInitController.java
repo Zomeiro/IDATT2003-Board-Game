@@ -17,7 +17,7 @@ import java.util.List;
 
 public class GameInitController {
     
-    private final String ICON_RELATIVE_PATH = "/PlayerIcons/";
+    private final String ICON_RELATIVE_PATH = "/edu/ntnu/idatt2003/idatt2003boardgame/PlayerIcons/";
     private List<String> iconFileNames = new ArrayList<>();
     private PlayerDataAccess playerDataAccess = new PlayerDataAccess();
     protected Stage primaryStage;
