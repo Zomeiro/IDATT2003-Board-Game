@@ -1,9 +1,10 @@
 package edu.ntnu.idatt2003.idatt2003boardgame.repository;
 
 import edu.ntnu.idatt2003.idatt2003boardgame.controller.GameController;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.stream.IntStream;
 
 import org.json.JSONArray;
@@ -18,16 +19,14 @@ import edu.ntnu.idatt2003.idatt2003boardgame.model.effect.SnakeEffect;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.effect.PlaceholderEffect;
 
 public class BoardJSON {
+    private static final File FILE = new File("src/main/resources/edu/ntnu/idatt2003/idatt2003boardgame/boards.json");
 
     public static Board constructSnLBoardFromJSON(int choice, GameController gameController) {
         Board board = new Board();
 
-        try (InputStream is = BoardJSON.class.getClassLoader().getResourceAsStream("boards.json")) {
-            if (is == null) {
-                throw new IOException("boards.json not found in resources!");
-            }
+        try {
+            String jsonText = new String(Files.readAllBytes(FILE.toPath()), StandardCharsets.UTF_8);
 
-            String jsonText = new String(is.readAllBytes(), StandardCharsets.UTF_8);
             JSONObject SnLBoard = new JSONObject(jsonText)
                 .getJSONArray("games")
                 .getJSONObject(0)
@@ -40,7 +39,10 @@ public class BoardJSON {
                 .forEach(i -> modifyEffectTileFromJSON(tilesWithEffects.getJSONObject(i), board, gameController));
 
         } catch (IOException e) {
+            System.err.println("Failed to read boards.json file: " + e.getMessage());
+            System.err.println("Looking for file at: " + FILE.getAbsolutePath());
             e.printStackTrace();
+            throw new RuntimeException("Could not load the board: " + e.getMessage());
         }
 
         return board;
