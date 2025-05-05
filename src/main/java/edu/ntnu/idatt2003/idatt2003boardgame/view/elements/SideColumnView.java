@@ -10,9 +10,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-public class SideColumnVisual extends VBox {
+public class SideColumnView extends VBox {
 
-    public SideColumnVisual(List<Player> players, DiceAnimation diceAnimation) {
+    public SideColumnView(List<Player> players, DiceAnimation diceAnimation) {
         
         this.setPrefWidth(500);
         this.setSpacing(250);
@@ -24,7 +24,7 @@ public class SideColumnVisual extends VBox {
         diceWrapper.setPrefWidth(500);
 
         this.getChildren().add(diceWrapper);
-        this.getChildren().add(new PlayerRowsVisual(players).getPlayerRows());
+        this.getChildren().add(new PlayerRowsView(players).getPlayerRows());
 
         this.setAlignment(Pos.CENTER); 
     }

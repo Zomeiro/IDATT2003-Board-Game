@@ -5,9 +5,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
-public class SnakeVisual extends Group {
+public class SnakeLayer extends Group {
     
-    public SnakeVisual(double length) {
+    public SnakeLayer(double length) {
 
         Circle skull = new Circle();
         skull.setCenterX(25);

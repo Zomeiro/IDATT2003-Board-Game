@@ -39,7 +39,7 @@ import javafx.scene.shape.Rectangle;
  *
  * @author Hector Mendana Morales
  */
-public class TileVisual extends StackPane {
+public class TileView extends StackPane {
 
     private final Tile tile;
     private final Rectangle background;
@@ -53,7 +53,7 @@ public class TileVisual extends StackPane {
      *
      * @param tile the {@code Tile} object this visual represents
      */
-    public TileVisual(Tile tile) {
+    public TileView(Tile tile) {
         this.tile = tile;
         this.background = new Rectangle(50, 50);
         background.setFill(Color.rgb(255, 255, 224));

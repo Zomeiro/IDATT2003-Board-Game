@@ -18,7 +18,7 @@ import edu.ntnu.idatt2003.idatt2003boardgame.model.effect.SkipTurnEffect;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.effect.SnakeEffect;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.effect.PlaceholderEffect;
 
-public class BoardJSON {
+public class JsonBoardRepository {
     private static final File FILE = new File("src/main/resources/edu/ntnu/idatt2003/idatt2003boardgame/boards.json");
 
     public static Board constructSnLBoardFromJSON(int choice, GameController gameController) {

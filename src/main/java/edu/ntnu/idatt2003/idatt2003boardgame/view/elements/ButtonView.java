@@ -4,9 +4,9 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
 
-public class ButtonVisual extends HBox {
+public class ButtonView extends HBox {
 
-    public ButtonVisual(Runnable onDiceRoll) {
+    public ButtonView(Runnable onDiceRoll) {
 
         Button rollDiceButton = new Button("Roll dice");
         rollDiceButton.setOnAction(e -> {

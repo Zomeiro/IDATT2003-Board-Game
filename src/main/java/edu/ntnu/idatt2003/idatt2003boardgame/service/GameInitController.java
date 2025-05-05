@@ -1,13 +1,12 @@
 package edu.ntnu.idatt2003.idatt2003boardgame.service;
 
 import edu.ntnu.idatt2003.idatt2003boardgame.model.Player;
-import edu.ntnu.idatt2003.idatt2003boardgame.repository.PlayerDataAccess;
+import edu.ntnu.idatt2003.idatt2003boardgame.repository.PlayerRepository;
 import edu.ntnu.idatt2003.idatt2003boardgame.view.scenes.GameInitView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 
 import java.io.File;
@@ -19,7 +18,7 @@ public class GameInitController {
     
     private final String ICON_RELATIVE_PATH = "/edu/ntnu/idatt2003/idatt2003boardgame/PlayerIcons/";
     private List<String> iconFileNames = new ArrayList<>();
-    private PlayerDataAccess playerDataAccess = new PlayerDataAccess();
+    private PlayerRepository playerDataAccess = new PlayerRepository();
     protected Stage primaryStage;
     private GameInitView view;
     private ArrayList<Integer> playerIconIndexes = new ArrayList<>();

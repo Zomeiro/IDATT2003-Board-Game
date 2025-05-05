@@ -6,8 +6,8 @@ import java.util.List;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.Tile;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.effect.LadderEffect;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.effect.SnakeEffect;
-import edu.ntnu.idatt2003.idatt2003boardgame.view.elements.BoardVisual;
-import edu.ntnu.idatt2003.idatt2003boardgame.view.elements.TileVisual;
+import edu.ntnu.idatt2003.idatt2003boardgame.view.elements.BoardView;
+import edu.ntnu.idatt2003.idatt2003boardgame.view.elements.TileView;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -15,10 +15,10 @@ import javafx.scene.transform.Rotate;
 
 public class LadderLayer extends Pane {
 
-    private final BoardVisual boardVisual;
+    private final BoardView boardView;
 
-    public LadderLayer(BoardVisual boardVisual, List<Tile> tilesWithLadders, List<Tile> tilesWithSnakes) {
-        this.boardVisual = boardVisual;
+    public LadderLayer(BoardView boardView, List<Tile> tilesWithLadders, List<Tile> tilesWithSnakes) {
+        this.boardView = boardView;
 
         this.setPrefSize(536, 482);
         this.setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
@@ -44,7 +44,7 @@ public class LadderLayer extends Pane {
         Integer targetX = null;
         Integer targetY = null;
 
-        Iterator<Node> tileIterator = boardVisual.getChildren().iterator();
+        Iterator<Node> tileIterator = boardView.getChildren().iterator();
 
         final int TILE_SIZE = 50;
         final int GAP = 4;
@@ -53,16 +53,16 @@ public class LadderLayer extends Pane {
         while (((baseX == null) || (targetX == null)) && (tileIterator.hasNext())) {
             Node tileNode = tileIterator.next();
 
-            if (tileNode instanceof TileVisual tileVisual) {
-                if (tileVisual.getTile().getNumber() == ladder.getBaseTileIndex()) {
+            if (tileNode instanceof TileView tileView) {
+                if (tileView.getTile().getNumber() == ladder.getBaseTileIndex()) {
 
-                    baseX = BoardVisual.getColumnIndex(tileVisual);
-                    baseY = BoardVisual.getRowIndex(tileVisual);
+                    baseX = BoardView.getColumnIndex(tileView);
+                    baseY = BoardView.getRowIndex(tileView);
 
-                } else if (tileVisual.getTile().getNumber() == ladder.getTargetTileIndex()) {
+                } else if (tileView.getTile().getNumber() == ladder.getTargetTileIndex()) {
 
-                    targetX = BoardVisual.getColumnIndex(tileVisual);
-                    targetY = BoardVisual.getRowIndex(tileVisual);
+                    targetX = BoardView.getColumnIndex(tileView);
+                    targetY = BoardView.getRowIndex(tileView);
 
                 }
             }
@@ -90,7 +90,7 @@ public class LadderLayer extends Pane {
 
     private void renderSnake(SnakeEffect snake) {
 
-        SnakeVisual snakeVisual;
+        SnakeLayer snakeLayer;
 
         Integer baseX = null;
         Integer baseY = null;
@@ -98,7 +98,7 @@ public class LadderLayer extends Pane {
         Integer targetX = null;
         Integer targetY = null;
 
-        Iterator<Node> tileIterator = boardVisual.getChildren().iterator();
+        Iterator<Node> tileIterator = boardView.getChildren().iterator();
 
         final int TILE_SIZE = 50;
         final int GAP = 4;
@@ -107,16 +107,16 @@ public class LadderLayer extends Pane {
         while (((baseX == null) || (targetX == null)) && (tileIterator.hasNext())) {
             Node tileNode = tileIterator.next();
 
-            if (tileNode instanceof TileVisual tileVisual) {
-                if (tileVisual.getTile().getNumber() == snake.getBaseTileIndex()) {
+            if (tileNode instanceof TileView tileView) {
+                if (tileView.getTile().getNumber() == snake.getBaseTileIndex()) {
 
-                    baseX = BoardVisual.getColumnIndex(tileVisual);
-                    baseY = BoardVisual.getRowIndex(tileVisual);
+                    baseX = BoardView.getColumnIndex(tileView);
+                    baseY = BoardView.getRowIndex(tileView);
 
-                } else if (tileVisual.getTile().getNumber() == snake.getTargetTileIndex()) {
+                } else if (tileView.getTile().getNumber() == snake.getTargetTileIndex()) {
 
-                    targetX = BoardVisual.getColumnIndex(tileVisual);
-                    targetY = BoardVisual.getRowIndex(tileVisual);
+                    targetX = BoardView.getColumnIndex(tileView);
+                    targetY = BoardView.getRowIndex(tileView);
 
                 }
             }
@@ -127,15 +127,15 @@ public class LadderLayer extends Pane {
 
         double hypotenuse = Math.sqrt((dx * dx) + (dy * dy));
 
-        snakeVisual = new SnakeVisual(hypotenuse * spacing - TILE_SIZE / 2);
-        snakeVisual.setLayoutX(baseX * spacing);
-        snakeVisual.setLayoutY(baseY * spacing + TILE_SIZE / 2.0);
+        snakeLayer = new SnakeLayer(hypotenuse * spacing - TILE_SIZE / 2);
+        snakeLayer.setLayoutX(baseX * spacing);
+        snakeLayer.setLayoutY(baseY * spacing + TILE_SIZE / 2.0);
 
         double angle = Math.toDegrees(Math.atan2(dx, dy));
 
-        snakeVisual.getTransforms().add(new Rotate(-angle, 25, 0));
+        snakeLayer.getTransforms().add(new Rotate(-angle, 25, 0));
 
-        this.getChildren().add(snakeVisual);
+        this.getChildren().add(snakeLayer);
 
     }
 

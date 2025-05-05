@@ -15,10 +15,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class PlayerRowsVisual extends VBox {
+public class PlayerRowsView extends VBox {
     private List<HBox> playerRows = new ArrayList<>();
 
-    public PlayerRowsVisual(List<Player> players) {
+    public PlayerRowsView(List<Player> players) {
         players.stream().forEach(i -> createPlayerRow(i));
     }
 
@@ -46,7 +46,7 @@ public class PlayerRowsVisual extends VBox {
 
     }
 
-    public PlayerRowsVisual getPlayerRows() {
+    public PlayerRowsView getPlayerRows() {
         return this;
     }  
  

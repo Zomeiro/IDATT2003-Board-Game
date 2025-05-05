@@ -1,6 +1,6 @@
 package edu.ntnu.idatt2003.idatt2003boardgame.view.scenes;
 
-import edu.ntnu.idatt2003.idatt2003boardgame.service.SnakesAndLaddersInitController;
+import edu.ntnu.idatt2003.idatt2003boardgame.service.SnakesAndLaddersInitializationService;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -34,7 +34,7 @@ public class StartScreenView {
 
         b1.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                new SnakesAndLaddersInitController(primaryStage).start();
+                new SnakesAndLaddersInitializationService(primaryStage).start();
             }
         });
 

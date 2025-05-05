@@ -7,12 +7,12 @@ import edu.ntnu.idatt2003.idatt2003boardgame.model.Tile;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 
-public class BoardVisual extends GridPane {
+public class BoardView extends GridPane {
     private final Board board;
     private final ArrayList<Tile> tileLogic;
-    private final ArrayList<TileVisual> tileViews;
+    private final ArrayList<TileView> tileViews;
 
-    public BoardVisual(Board board) {
+    public BoardView(Board board) {
         this.board = board;
         this.tileLogic = board.getTiles();
         this.tileViews = new ArrayList<>();
@@ -34,17 +34,17 @@ public class BoardVisual extends GridPane {
         for (int i = 0; i < this.board.getTileCount(); i++) {
 
             Tile tile = tileLogic.get(i);
-            TileVisual tileVisual = new TileVisual(tile);
+            TileView tileView = new TileView(tile);
 
-            tileViews.add(tileVisual);
+            tileViews.add(tileView);
 
             if ((i % this.board.getBoardWidth()) == 0) { movesRight = !movesRight; }
 
             if (movesRight) {
-                this.add(tileVisual, i % this.board.getBoardWidth(), i / this.board.getBoardWidth());
+                this.add(tileView, i % this.board.getBoardWidth(), i / this.board.getBoardWidth());
 
             } else {
-                this.add(tileVisual, this.board.getBoardWidth() - ((i % this.board.getBoardWidth()) + 1), i / this.board.getBoardWidth());
+                this.add(tileView, this.board.getBoardWidth() - ((i % this.board.getBoardWidth()) + 1), i / this.board.getBoardWidth());
 
             }
         }
@@ -53,13 +53,13 @@ public class BoardVisual extends GridPane {
 
 
     public void updateEntireBoard() {
-        for (TileVisual tv : tileViews) {
+        for (TileView tv : tileViews) {
             tv.updateVisual();
         }
         
     }
 
-    public BoardVisual getBoardVisual() {
+    public BoardView getBoardVisual() {
         return this;
     }
 

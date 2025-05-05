@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import javafx.scene.image.Image;
 
 
-public class PlayerDataAccess extends PlayerCSV {
+public class PlayerRepository extends CsvPlayerRepository {
     // This path must match the resource location inside src/main/resources
     private final String ICON_RELATIVE_PATH = "/edu/ntnu/idatt2003/idatt2003boardgame/PlayerIcons/";
 
-    public PlayerDataAccess() {
+    public PlayerRepository() {
         super();
     }
 

@@ -2,16 +2,13 @@ package edu.ntnu.idatt2003.idatt2003boardgame.model;
 
 import java.util.ArrayList;
 
-import edu.ntnu.idatt2003.idatt2003boardgame.model.Player;
-import edu.ntnu.idatt2003.idatt2003boardgame.model.Rules;
-
-public class Menu {
+public class GameConfig {
     
     private static int playerCount;
     private static Rules rules;
     private static int diceSize;
 
-    public Menu(int playerCount, Rules rules, int diceSize) {
+    public GameConfig(int playerCount, Rules rules, int diceSize) {
         this.playerCount = playerCount;
         this.rules = rules;
         this.diceSize = diceSize;

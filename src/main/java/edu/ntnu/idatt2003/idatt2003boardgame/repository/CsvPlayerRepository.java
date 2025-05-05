@@ -11,11 +11,10 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
-public class PlayerCSV {
+public class CsvPlayerRepository {
 
     // Defines player CSV file
     private static final File FILE = new File("src/main/resources/edu/ntnu/idatt2003/idatt2003boardgame/playerProfiles.csv");
-    //note to self: working in playerdataaccess, not working here. Just move that part over here and we're good.
     private static ArrayList<String[]> getCSVContent() {
         ArrayList<String[]> allPlayers = new ArrayList<>();
 
