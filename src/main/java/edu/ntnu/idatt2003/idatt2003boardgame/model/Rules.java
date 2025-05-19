@@ -17,6 +17,10 @@ public class Rules {
         
     }
 
+    public static Rules standard(int diceSize) {
+        return new Rules(new ArrayList<>(), diceSize);
+    }
+
     public Dice getDice() {
         return dice;
     }
