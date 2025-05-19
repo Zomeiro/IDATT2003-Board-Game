@@ -2,7 +2,7 @@ package edu.ntnu.idatt2003.idatt2003boardgame.model.dice;
 import java.util.ArrayList;
 
 public class Dice {
-    private static final ArrayList<Die> dice = new ArrayList<>();
+    private final ArrayList<Die> dice = new ArrayList<>();
 
     public Dice(int numberOfDice) {
         for (int i = 0; i < numberOfDice; i++) {
