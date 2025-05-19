@@ -12,14 +12,17 @@ public class SnakesAndLaddersInitializationService extends GameInitController {
     }
 
     @Override
-    public void startGame(){
+    public void startGame() {
         ArrayList<Player> playerList = this.getCurrentPlayers();
+
         if (playerList != null && playerList.size() > 1) {
-            
-            new Ingame(new GameInitializationService("SnL", 0, playerList)).createGameScene(this.primaryStage);
+            var service = new GameInitializationService("SnL1", playerList);
+            new Ingame(service).createGameScene(this.primaryStage);
             return;
         }
+
         System.out.println("Please select at least 2 players!");
     }
+
 
 }

@@ -3,7 +3,7 @@ package edu.ntnu.idatt2003.idatt2003boardgame.view.scenes;
 import java.util.ArrayList;
 
 import edu.ntnu.idatt2003.idatt2003boardgame.controller.GameController;
-import edu.ntnu.idatt2003.idatt2003boardgame.controller.VisualController;
+import edu.ntnu.idatt2003.idatt2003boardgame.controller.GameViewController;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.Board;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.Tile;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.effect.LadderEffect;
@@ -21,7 +21,7 @@ public class Ingame {
 
     private final Board board;
     private final BoardView boardView;
-    private final VisualController visualController;
+    private final GameViewController gameViewController;
     private final VBox sideColumn;
     GameController gameController;
 
@@ -29,7 +29,7 @@ public class Ingame {
         this.board = gameInitializationService.getBoard();
         this.boardView = gameInitializationService.getBoardVisual();
         this.gameController = gameInitializationService.getGameController();
-        this.visualController = gameInitializationService.getVisualController();
+        this.gameViewController = gameInitializationService.getVisualController();
         this.sideColumn = gameInitializationService.getSideColumn();
         
 
@@ -58,7 +58,7 @@ public class Ingame {
         }
     
         BorderPane root = new BorderPane();
-        root.setBottom(visualController.getDiceButton()); 
+        root.setBottom(gameViewController.getDiceButton());
         root.setLeft(sideColumn);
     
         Scene scene = new Scene(root, 600, 600);

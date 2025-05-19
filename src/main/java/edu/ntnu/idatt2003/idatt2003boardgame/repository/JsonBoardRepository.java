@@ -1,10 +1,11 @@
 package edu.ntnu.idatt2003.idatt2003boardgame.repository;
 
-import edu.ntnu.idatt2003.idatt2003boardgame.controller.GameController;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import org.json.JSONArray;
@@ -21,7 +22,7 @@ import edu.ntnu.idatt2003.idatt2003boardgame.model.effect.PlaceholderEffect;
 public class JsonBoardRepository {
     private static final File FILE = new File("src/main/resources/edu/ntnu/idatt2003/idatt2003boardgame/boards.json");
 
-    public static Board constructSnLBoardFromJSON(int choice, GameController gameController) {
+    public static Board constructSnLBoardFromJSON(int choice) {
         Board board = new Board();
 
         try {
@@ -36,7 +37,7 @@ public class JsonBoardRepository {
             JSONArray tilesWithEffects = SnLBoard.getJSONArray("tiles");
 
             IntStream.range(0, tilesWithEffects.length())
-                .forEach(i -> modifyEffectTileFromJSON(tilesWithEffects.getJSONObject(i), board, gameController));
+                .forEach(i -> modifyEffectTileFromJSON(tilesWithEffects.getJSONObject(i), board));
 
         } catch (IOException e) {
             System.err.println("Failed to read boards.json file: " + e.getMessage());
@@ -48,7 +49,7 @@ public class JsonBoardRepository {
         return board;
     }
 
-    public static void modifyEffectTileFromJSON(JSONObject tileWithEffect, Board board, GameController gameController) {
+    public static void modifyEffectTileFromJSON(JSONObject tileWithEffect, Board board) {
         int tileNumber = tileWithEffect.getInt("tile");
         String effectType = tileWithEffect.getString("effect");
 
@@ -82,4 +83,62 @@ public class JsonBoardRepository {
 
         board.getTiles().get(tileNumber - 1).setEffect(effect);
     }
+
+    public static List<String> listSnLBoards() {
+        List<String> names = new ArrayList<>();
+
+        try {
+            String jsonText  = Files.readString(FILE.toPath(), StandardCharsets.UTF_8);
+
+            JSONArray snlArr = new JSONObject(jsonText)
+                .getJSONArray("games")
+                .getJSONObject(0)
+                .getJSONArray("SnL");
+
+            for (int i = 0; i < snlArr.length(); i++) {
+                JSONObject boardObj = snlArr.getJSONObject(i);
+                names.add(boardObj.optString("name", "SnL-" + i));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Kunne ikke lese boards.json: " + e.getMessage(), e);
+        }
+        return names;
+    }
+
+
+    public static Board loadBoardByName(String name) {
+
+        try {
+            String jsonText  = Files.readString(FILE.toPath(), StandardCharsets.UTF_8);
+
+            JSONArray snlArr = new JSONObject(jsonText)
+                .getJSONArray("games")
+                .getJSONObject(0)
+                .getJSONArray("SnL");
+
+            for (int i = 0; i < snlArr.length(); i++) {
+                JSONObject boardObj  = snlArr.getJSONObject(i);
+                String boardName     = boardObj.optString("name", "SnL-" + i);
+
+                if (boardName.equals(name)) {
+
+                    Board board = new Board();
+
+                    JSONArray tiles = boardObj.getJSONArray("tiles");
+                    IntStream.range(0, tiles.length())
+                        .forEach(j ->
+                            modifyEffectTileFromJSON(tiles.getJSONObject(j), board)
+                        );
+
+                    return board;
+                }
+            }
+
+            throw new IllegalArgumentException(
+                "Fant ikke Snakes & Ladders-brett med navn \"" + name + "\" i boards.json");
+        } catch (IOException e) {
+            throw new RuntimeException("Kunne ikke lese boards.json: " + e.getMessage(), e);
+        }
+    }
+
 }
