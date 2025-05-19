@@ -22,8 +22,13 @@ public class GameInitController {
     protected Stage primaryStage;
     private GameInitView view;
     private ArrayList<Integer> playerIconIndexes = new ArrayList<>();
+    public enum GameType {
+        SnL,
+        LUDO,
+    }
+    private GameType selectedGameType = GameType.SnL;
 
-    
+
     public GameInitController(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.view = new GameInitView(this.primaryStage);
@@ -161,7 +166,13 @@ public class GameInitController {
         }
         return playerList;
     }
+
+    public void setSelectedGameType(GameType type) {
+        this.selectedGameType = type;
+    }
+
     public void start() {
         view.show();
     }
 }
+
