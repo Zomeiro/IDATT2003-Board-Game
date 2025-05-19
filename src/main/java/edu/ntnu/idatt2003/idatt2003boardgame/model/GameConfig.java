@@ -3,7 +3,7 @@ package edu.ntnu.idatt2003.idatt2003boardgame.model;
 import java.util.ArrayList;
 
 public class GameConfig {
-    
+
     private static int playerCount;
     private static Rules rules;
     private static int diceSize;
@@ -13,6 +13,18 @@ public class GameConfig {
         this.rules = rules;
         this.diceSize = diceSize;
 
+    }
+
+    public GameConfig(int playerCount, Rules rules) {
+        this.playerCount = playerCount;
+        this.rules = rules;
+        this.diceSize = 1;
+
+    }
+
+    public static GameConfig defaultConfig(int playerCount) {
+        Rules defaultRules = Rules.standard(1);
+        return new GameConfig(playerCount, defaultRules);
     }
 
     public Rules getRules() {
@@ -38,7 +50,7 @@ public class GameConfig {
     public void setDiceSize(int gameDiceSize) {
         diceSize = gameDiceSize;
     }
-    
+
     //Create game button when setup is finished using the UI
     public static void createGame() {
         ArrayList<Player> players = new ArrayList<>();
