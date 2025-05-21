@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Consumer;
 
 public final class BoardGame implements GameModelObserver {
 
@@ -24,14 +25,14 @@ public final class BoardGame implements GameModelObserver {
 
   private final List<GameModelObserver> observers = new CopyOnWriteArrayList<>();
 
-  public BoardGame(Board board, List<Player> players, GameConfig config) {
+  public BoardGame(Board board, List<Player> players, GameConfig config, Consumer<Player> onGameWon) {
     this.board = Objects.requireNonNull(board);
     this.players = new ArrayList<>(players);
 
     this.gameController = new GameController(board, this.players);
     this.boardView = new BoardView(board);
 
-    this.gameViewController = new GameViewController(() -> gameController.handleRollDice(), boardView);
+    this.gameViewController = new GameViewController(() -> gameController.handleRollDice(), boardView, onGameWon);
 
     this.gameController.addObserver(gameViewController);
     this.gameController.addObserver(new LoggerObserver());

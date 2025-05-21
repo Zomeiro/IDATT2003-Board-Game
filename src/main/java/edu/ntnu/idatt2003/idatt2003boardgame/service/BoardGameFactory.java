@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
+import java.util.function.Consumer;
 
 import edu.ntnu.idatt2003.idatt2003boardgame.BoardGame;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.Board;
@@ -29,22 +30,22 @@ public final class BoardGameFactory {
 
     return Collections.unmodifiableList(presets);
   }
-  
-  public static BoardGame createSnakesAndLadders(String preset, List<Player> players) {
+
+  public static BoardGame createSnakesAndLadders(String preset, List<Player> players, Consumer<Player> onGameWon) {
 
     Board board;
 
     if (preset.startsWith("builtin-SnL-")) {
       int idx = Integer.parseInt(preset.substring("builtin-SnL-".length()));
       board = buildBuiltinSnL(idx);
-
     } else {
-      board = JsonBoardRepository.loadBoardByName(preset);  // les fra fil
+      board = JsonBoardRepository.loadBoardByName(preset);
     }
 
     GameConfig cfg = GameConfig.defaultConfig(players.size());
-    return new BoardGame(board, players, cfg);
+    return new BoardGame(board, players, cfg, onGameWon);  // ✅ med callback
   }
+
 
 
   private static Board buildBuiltinSnL(int idx) {

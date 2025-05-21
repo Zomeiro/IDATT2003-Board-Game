@@ -9,6 +9,7 @@ import edu.ntnu.idatt2003.idatt2003boardgame.model.Board;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.Player;
 import edu.ntnu.idatt2003.idatt2003boardgame.view.elements.BoardView;
 import edu.ntnu.idatt2003.idatt2003boardgame.view.elements.SideColumnView;
+import java.util.function.Consumer;
 import javafx.scene.layout.VBox;
 
 public class GameInitializationService {
@@ -16,10 +17,9 @@ public class GameInitializationService {
     private final BoardGame boardGame;
     private final SideColumnView sideColumnView;
 
-    public GameInitializationService(String presetName, List<Player> players) {
+    public GameInitializationService(String presetName, List<Player> players, Consumer<Player> onGameWon) {
 
-        this.boardGame = BoardGameFactory.createSnakesAndLadders(presetName, players);
-
+        this.boardGame = BoardGameFactory.createSnakesAndLadders(presetName, players, onGameWon);
         this.sideColumnView = new SideColumnView(players,boardGame.getGameViewController().getDiceAnimation());
     }
 
