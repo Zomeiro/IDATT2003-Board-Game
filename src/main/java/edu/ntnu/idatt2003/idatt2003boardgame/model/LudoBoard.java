@@ -240,6 +240,10 @@ public HashMap<String, List<Integer>> getColorPaths() {
     
     return colorPaths;
 }
+
+    public ArrayList<Tile> getTiles() {
+        return tiles;
+    }
     
     // made this for debugging purposes. not needed elsewhere
     public void printAsciiBoard() { 
