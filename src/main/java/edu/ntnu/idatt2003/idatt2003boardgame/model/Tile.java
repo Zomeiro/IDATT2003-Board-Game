@@ -9,6 +9,7 @@ import edu.ntnu.idatt2003.idatt2003boardgame.model.effect.Effect;
 public class Tile {
     
     private List<Player> players;
+    private List<LudoPiece> pieces;
     private Effect effect;
     private final int number;
     private int[] coordinates;
@@ -18,6 +19,7 @@ public class Tile {
         this.effect = null;
         this.coordinates = null;
         this.players = new ArrayList<>();
+        this.pieces = new ArrayList<>();
     }
 
     public Tile(int number,int[] coordinates) {
@@ -25,6 +27,7 @@ public class Tile {
         this.effect = null;
         this.coordinates = coordinates;
         this.players = new ArrayList<>();
+        this.pieces = new ArrayList<>();
     }
 
     public int getNumber() {
@@ -46,11 +49,20 @@ public class Tile {
     public List<Player> getPlayers() {
         return players;
     }
+    public List<LudoPiece> getPieces() {
+        return pieces;
+    }
 
 
     public void addPlayer(Player recievedPlayer) {
         players.add(recievedPlayer);
 
+    }
+    public void addPiece(LudoPiece piece) {
+        pieces.add(piece);
+    }
+    public void removePiece(LudoPiece piece) {
+        pieces.remove(piece);
     }
 
     public void popPlayer() {

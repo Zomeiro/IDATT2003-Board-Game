@@ -4,6 +4,7 @@ import edu.ntnu.idatt2003.idatt2003boardgame.controller.GameController;
 import edu.ntnu.idatt2003.idatt2003boardgame.controller.GameViewController;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.Board;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.GameConfig;
+import edu.ntnu.idatt2003.idatt2003boardgame.model.LudoPiece;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.Player;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.observer.GameModelObserver;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.observer.LoggerObserver;
@@ -66,6 +67,11 @@ public final class BoardGame implements GameModelObserver {
   @Override
   public void onPlayerMoved(Player player, int newPosition) {
     observers.forEach(o -> o.onPlayerMoved(player, newPosition));
+  }
+
+  @Override
+  public void onPieceMoved(LudoPiece piece, int newPosition) {
+    observers.forEach(o -> o.onPieceMoved(piece, newPosition));
   }
 
   @Override

@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.idatt2003boardgame.model.observer;
 
+import edu.ntnu.idatt2003.idatt2003boardgame.model.LudoPiece;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.Player;
 
 
@@ -13,6 +14,11 @@ public class TextUIObserver implements GameModelObserver {
   @Override
   public void onPlayerMoved(Player player, int newPosition) {
     System.out.println(player.getName() + " moved to square: " + newPosition);
+  }
+
+  @Override
+  public void onPieceMoved(LudoPiece piece, int newPosition) {
+    System.out.println(piece.getOwner().getName() + " moved piece to square: " + newPosition);
   }
 
   @Override

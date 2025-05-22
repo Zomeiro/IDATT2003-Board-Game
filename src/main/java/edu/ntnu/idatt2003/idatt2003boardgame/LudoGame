@@ -1,0 +1,110 @@
+package edu.ntnu.idatt2003.idatt2003boardgame;
+
+import edu.ntnu.idatt2003.idatt2003boardgame.controller.LudoGameController;
+import edu.ntnu.idatt2003.idatt2003boardgame.model.LudoBoard;
+import edu.ntnu.idatt2003.idatt2003boardgame.model.LudoPlayer;
+import edu.ntnu.idatt2003.idatt2003boardgame.model.LudoPiece;
+import edu.ntnu.idatt2003.idatt2003boardgame.model.observer.GameModelObserver;
+import edu.ntnu.idatt2003.idatt2003boardgame.view.elements.LudoBoardView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Consumer;
+
+public final class LudoGame implements GameModelObserver {
+
+  private final LudoBoard board;
+  private final List<LudoPlayer> players;
+  private final LudoGameController gameController;
+  private final LudoBoardView boardView;
+  private final Consumer<LudoPlayer> onGameWon;
+
+  private final List<GameModelObserver> observers = new CopyOnWriteArrayList<>();
+
+  public LudoGame(LudoBoard board, List<LudoPlayer> players, Consumer<LudoPlayer> onGameWon) {
+    this.board = Objects.requireNonNull(board);
+    this.players = new ArrayList<>(players);
+    this.onGameWon = onGameWon;
+
+    this.gameController = new LudoGameController(board, this.players);
+    this.boardView = new LudoBoardView(board);
+
+    this.gameController.addObserver(this);
+  }
+
+  public void start() {
+    gameController.start();
+    boardView.updateEntireBoard();
+  }
+
+  public void rollDice() {
+    gameController.handleRoll();
+  }
+
+  // Observer management
+  public void addObserver(GameModelObserver observer) {
+    observers.add(observer);
+    gameController.addObserver(observer);
+  }
+
+  public void removeObserver(GameModelObserver observer) {
+    observers.remove(observer);
+    gameController.removeObserver(observer);
+  }
+
+  @Override
+  public void onDiceRolled(int value) {
+    observers.forEach(o -> o.onDiceRolled(value));
+  }
+
+  @Override
+  public void onPlayerMoved(Player player, int newPosition) {
+    // Ludo doesn't use this method - uses onPieceMoved instead
+  }
+
+  @Override
+  public void onPieceMoved(LudoPiece piece, int newPosition) {
+    observers.forEach(o -> o.onPieceMoved(piece, newPosition));
+    boardView.updateEntireBoard();
+  }
+
+  @Override
+  public void onTurnChanged(Player newPlayer) {
+    observers.forEach(o -> o.onTurnChanged(newPlayer));
+  }
+
+  @Override
+  public void onGameWon(Player winner) {
+    observers.forEach(o -> o.onGameWon(winner));
+    if (onGameWon != null && winner instanceof LudoPlayer) {
+      onGameWon.accept((LudoPlayer) winner);
+    }
+  }
+
+  // Getters for UI
+  public LudoBoard getBoard() {
+    return board;
+  }
+
+  public LudoBoardView getBoardView() {
+    return boardView;
+  }
+
+  public LudoGameController getGameController() {
+    return gameController;
+  }
+
+  public List<LudoPlayer> getPlayers() {
+    return List.copyOf(players);
+  }
+
+  public boolean isFinished() {
+    return gameController.isFinished();
+  }
+
+  public LudoPlayer getCurrentPlayer() {
+    return gameController.getCurrentPlayer();
+  }
+}

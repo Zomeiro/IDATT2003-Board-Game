@@ -1,10 +1,14 @@
 package edu.ntnu.idatt2003.idatt2003boardgame.controller;
 
+import edu.ntnu.idatt2003.idatt2003boardgame.model.LudoBoard;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.Player;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.observer.GameModelObserver;
 import edu.ntnu.idatt2003.idatt2003boardgame.view.elements.BoardView;
 import edu.ntnu.idatt2003.idatt2003boardgame.view.elements.ButtonView;
 import edu.ntnu.idatt2003.idatt2003boardgame.view.elements.DiceAnimation;
+import edu.ntnu.idatt2003.idatt2003boardgame.model.LudoPiece;
+
+import java.util.List;
 import java.util.function.Consumer;
 import javafx.scene.layout.HBox;
 
@@ -33,6 +37,10 @@ public class GameViewController implements GameModelObserver {
 
     @Override
     public void onDiceRolled(int value) {
+        LudoBoard board = new LudoBoard();
+        board.printAsciiBoard();
+        board.getColorPaths()
+                .forEach((color, path) -> System.out.println(color + ": " + path));
         diceVisual.displayRoll(value);
     }
 
@@ -44,6 +52,11 @@ public class GameViewController implements GameModelObserver {
     @Override
     public void onTurnChanged(Player newPlayer) {
         //add something here to highlight current player if time
+    }
+
+    @Override
+    public void onPieceMoved(LudoPiece piece, int newPosition) {
+        boardView.updateEntireBoard();
     }
 
     @Override

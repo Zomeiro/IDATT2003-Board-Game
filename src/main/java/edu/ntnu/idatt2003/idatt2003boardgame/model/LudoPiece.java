@@ -1,31 +1,47 @@
 package edu.ntnu.idatt2003.idatt2003boardgame.model;
 
 public class LudoPiece {
-  private final Player owner;
-  private int position; //-1 = i in thingy, 0 = start square, 1++ = steps
+    private final Player owner;
+    private final LudoColor color;
+    private int position; // -1 = in yard, 0-3 in home, 4-60 = on board, 57+ = finished
+    private final int id;
 
-  public LudoPiece(Player owner) {
-    this.owner = owner;
-    this.position = -1;
-  }
+    public LudoPiece(Player owner, LudoColor color, int id) {
+        this.owner = owner;
+        this.color = color;
+        this.position = 0; //start 
+        this.id = id;
+    }
 
-  public Player getOwner() {
-    return owner;
-  }
+    public Player getOwner() {
+        return owner;
+    }
+    
+    public LudoColor getColor() {
+        return color;
+    }
 
-  public int getPosition() {
-    return position;
-  }
+    public int getPosition() {
+        return position;
+    }
 
-  public void setPosition(int pos) {
-    this.position = pos;
-  }
+    public int getId() {
+        return id;
+    }
 
-  public boolean isInYard() {
-    return position == -1;
-  }
+    public void setPosition(int pos) {
+        this.position = pos;
+    }
 
-  public boolean isFinished() {
-    return position >= 57;
-  }
+    public boolean isInYard() {
+        return position == -1;
+    }
+
+    public boolean isFinished() {
+        return position >= 57;
+    }
+    
+    public boolean isOnBoard() {
+        return position >= 0 && position < 57;
+    }
 }

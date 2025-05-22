@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.idatt2003boardgame.model.observer;
 
+import edu.ntnu.idatt2003.idatt2003boardgame.model.LudoPiece;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.Player;
 
 import java.util.List;
@@ -27,6 +28,12 @@ public class GameModel {
   public void firePlayerMoved(Player player, int newPosition) {
     for (GameModelObserver l : listeners) {
       l.onPlayerMoved(player, newPosition);
+    }
+  }
+
+  public void firePieceMoved(LudoPiece piece, int newPosition) {
+    for (GameModelObserver l : listeners) {
+      l.onPieceMoved(piece, newPosition);
     }
   }
 
