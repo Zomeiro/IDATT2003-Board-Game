@@ -3,6 +3,7 @@ package edu.ntnu.idatt2003.idatt2003boardgame.model;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
 import edu.ntnu.idatt2003.idatt2003boardgame.util.Direction;
@@ -11,6 +12,9 @@ import edu.ntnu.idatt2003.idatt2003boardgame.model.Tile;
 public class LudoBoard {
     private final int boardSize;
     private ArrayList<Tile> tiles;
+    private List<Tile> mainLoop;
+    private List<Tile> centerUp, centerRight, centerDown, centerLeft;
+    private List<Tile> homeUpLeft, homeUpRight, homeDownRight, homeDownLeft;
 
     public LudoBoard() {
         this.tiles = new ArrayList<>();
@@ -25,11 +29,13 @@ public class LudoBoard {
         tiles.addAll(generateCenterPath(Direction.RIGHT));
         tiles.addAll(generateCenterPath(Direction.DOWN));
         tiles.addAll(generateCenterPath(Direction.LEFT));
+        tiles.addAll(generateHomeTiles(Direction.UP_LEFT));
         tiles.addAll(generateHomeTiles(Direction.UP_RIGHT));
         tiles.addAll(generateHomeTiles(Direction.DOWN_RIGHT));
         tiles.addAll(generateHomeTiles(Direction.DOWN_LEFT));
-        tiles.addAll(generateHomeTiles(Direction.UP_LEFT));
+        
     }
+    
 
     public ArrayList<Tile> generateMainLoop() {
         ArrayList<Tile> mainTiles = new ArrayList<>();
@@ -54,7 +60,7 @@ public class LudoBoard {
             longStep, shortStep, longStep,1,
             longStep, shortStep, longStep,1 
         };
-        int tileIndex = 0;
+        int tileIndex = tiles.size();
         int row = 5, col = 6;
 
         for (int seg = 0; seg < dirs.length; seg++) {
@@ -70,38 +76,37 @@ public class LudoBoard {
             }
         }
 
-    // Hvis du ønsker å ha alle i én liste:
     return mainTiles;
     }
 
     public ArrayList<Tile> generateCenterPath(Direction direction) {
         ArrayList<Tile> centerPath = new ArrayList<>();
     
-        int center    = boardSize / 2;    // 7 for 15×15
-        int centerLen = center - 1;       // 6 ruter (fra 1→6 eller 13→8)
+        int center = boardSize / 2;
+        int centerLen = center - 1;       
     
-        // Finn start‐posisjon ett hakk innenfor kanten, avhengig av retning
+        //finding start position on away from edge 
         int startRow = center, startCol = center;
         switch(direction) {
             case DOWN:
-                startRow = 1;      // ett fra toppraden (0)
-                startCol = center; // midtkolonne
+                startRow = 1;  
+                startCol = center; 
                 break;
             case UP:
-                startRow = boardSize - 2; // ett fra bunnen (14)
+                startRow = boardSize - 2;
                 startCol = center;
                 break;
             case RIGHT:
                 startRow = center;
-                startCol = 1;       // ett fra venstre kolonne (0)
+                startCol = 1; 
                 break;
             case LEFT:
                 startRow = center;
-                startCol = boardSize - 2; // ett fra høyre kolonne (14)
+                startCol = boardSize - 2;
                 break;
             default:
                 throw new IllegalArgumentException(
-                    "generateCenterPath only supports cardinal Directions"
+                    "generateCenterPath only supports directions UP, RIGHT, DOWN and LEFT"
                 );
         }
     
@@ -129,12 +134,10 @@ public class LudoBoard {
     public ArrayList<Tile> generateHomeTiles(Direction direction) {
         ArrayList<Tile> homeTiles = new ArrayList<>();
     
-        // Finn offset = hvor langt inn start‐området (6×6) strekker seg fra kanten.
-        int center   = boardSize / 2;     // 7 for 15×15
-        int longStep = boardSize/2 - 2;   // 5 for 15×15
-        int offset   = center - longStep; // 7 - 5 = 2
+        int center   = boardSize / 2;
+        int longStep = boardSize/2 - 2;   
+        int offset   = center - longStep;
     
-        // Beregn topp‐venstre posisjon for 2×2‐blokken, avhengig av hjørne
         int baseRow, baseCol;
         switch(direction) {
             case UP_LEFT:
@@ -159,18 +162,18 @@ public class LudoBoard {
                 );
         }
     
-        // Hent start‐index for tile‐numre
+        //get start index for home tiles
         int tileIndex = tiles.size();
     
-        // Lag 2×2 blokken
+        //make 4 home tiles
         for (int dr = 0; dr < 2; dr++) {
             for (int dc = 0; dc < 2; dc++) {
                 int r = baseRow + dr;
                 int c = baseCol + dc;
-                // Valider at vi ikke går utenfor brettet
+                //validate no out of bounds
                 if (r < 0 || r >= boardSize || c < 0 || c >= boardSize) {
                     throw new IllegalStateException(
-                        String.format("HomeTile utenfor brettet: (%d,%d)", r, c)
+                        String.format("Home tile out of bounds: (%d,%d)", r, c)
                     );
                 }
                 Tile t = new Tile(tileIndex++, new int[]{r, c});
@@ -182,7 +185,61 @@ public class LudoBoard {
     }
     
 
+public HashMap<String, List<Integer>> getColorPaths() {
+    HashMap<String, List<Integer>> colorPaths = new HashMap<>();
 
+    //red path (starts at main loop index 7, ends at index 5 before entering center)
+    List<Integer> redPath = new ArrayList<>();
+    //home tiles first
+    redPath.addAll(List.of(76, 77, 78, 79));
+    //start tile and main loop (starting from index 7, going 51 steps to end at index 5)
+    for (int i = 0; i < 51; i++) {
+        redPath.add((46 + i) % 52);
+    }
+    //center path RIGHT (indices 58-63)
+    redPath.addAll(List.of(58, 59, 60, 61, 62, 63));
+    
+    //blue path (starts at main loop index 20, ends at index 18 before entering center)  
+    List<Integer> bluePath = new ArrayList<>();
+    // Home tiles first
+    bluePath.addAll(List.of(80, 81, 82, 83));
+    // Start tile and main loop (starting from index 20, going 51 steps to end at index 18)
+    for (int i = 0; i < 51; i++) {
+        bluePath.add((7 + i) % 52);
+    }
+    // Center path DOWN (indices 64-69)
+    bluePath.addAll(List.of(64, 65, 66, 67, 68, 69));
+    
+    //Yellow path (starts at main loop index 33, ends at index 31 before entering center)
+    List<Integer> yellowPath = new ArrayList<>();
+    //home tiles first
+    yellowPath.addAll(List.of(84, 85, 86, 87));
+    // start tile and main loop (starting from index 33, going 51 steps to end at index 31)
+    for (int i = 0; i < 51; i++) {
+        yellowPath.add((20 + i) % 52);
+    }
+    //center path LEFT (indices 70-75)
+    yellowPath.addAll(List.of(70, 71, 72, 73, 74, 75));
+    
+    
+    //green path (starts at main loop index 46, ends at index 44 before entering center)
+    List<Integer> greenPath = new ArrayList<>();
+    //home tiles
+    greenPath.addAll(List.of(88, 89, 90, 91));
+    //start tile and main loop (starting from index 46, going 51 steps to end at index 44)
+    for (int i = 0; i < 51; i++) {
+        greenPath.add((33 + i) % 52);
+    }
+    //center path UP (indices 52-57)
+    greenPath.addAll(List.of(52, 53, 54, 55, 56, 57));
+    
+    colorPaths.put("RED", redPath);
+    colorPaths.put("BLUE", bluePath);
+    colorPaths.put("YELLOW", yellowPath);
+    colorPaths.put("GREEN", greenPath);
+    
+    return colorPaths;
+}
     
     // made this for debugging purposes. not needed elsewhere
     public void printAsciiBoard() { 
