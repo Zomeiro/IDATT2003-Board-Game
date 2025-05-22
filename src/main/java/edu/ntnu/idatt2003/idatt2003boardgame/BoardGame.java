@@ -32,11 +32,13 @@ public final class BoardGame implements GameModelObserver {
     this.gameController = new GameController(board, this.players);
     this.boardView = new BoardView(board);
 
+    //give onGameWon consumer to GameViewController
     this.gameViewController = new GameViewController(() -> gameController.handleRollDice(), boardView, onGameWon);
 
     this.gameController.addObserver(gameViewController);
     this.gameController.addObserver(new LoggerObserver());
-    this.gameController.setVisualController(null);
+    //link gameController with GameViewController
+    this.gameController.setVisualController(this.gameViewController);
   }
 
   public void start() {
