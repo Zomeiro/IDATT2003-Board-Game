@@ -32,8 +32,13 @@ public final class BoardGame implements GameModelObserver {
     this.gameController = new GameController(board, this.players);
     this.boardView = new BoardView(board);
 
-    //give onGameWon consumer to GameViewController
-    this.gameViewController = new GameViewController(() -> gameController.handleRollDice(), boardView, onGameWon);
+    //give start action and roll dice action to gamecontroller (got from gemini)
+    this.gameViewController = new GameViewController(
+            () -> gameController.handleRollDice(),
+            () -> gameController.start(),       
+            boardView,
+            onGameWon
+    );
 
     this.gameController.addObserver(gameViewController);
     this.gameController.addObserver(new LoggerObserver());
