@@ -7,7 +7,7 @@
         { "tile": 33, "effect": "LoseTurn"},
         { "tile": 48, "effect": "Back"},
         { "tile": 62, "effect": "LoseTurn"},
-        { "tile": 75, "effect": "Ladder", "target": 95 },
+        { "tile": 75, "effect": "Ladder", "target": 85 },
         { "tile": 80, "effect": "Snake", "target": 50 }
     ]
 }
