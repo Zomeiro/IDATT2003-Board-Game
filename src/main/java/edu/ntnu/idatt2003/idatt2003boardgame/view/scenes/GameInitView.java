@@ -23,7 +23,7 @@ import java.util.List;
  * This view allows users to set up player profiles, select icons, choose a game board
  * (from presets, random generation, or a file), and start the game.
  * It interacts with a GameInitController to handle user actions and data.
- * 
+ *
  * @author Bjørn Adam Vangen
  */
 public class GameInitView {
@@ -98,10 +98,19 @@ public class GameInitView {
         addPlayerBtnWrapper.setAlignment(Pos.CENTER);
         menuWrapper.getChildren().add(addPlayerBtnWrapper);
 
+        //text box for player save reminder ---
+        Label playerSaveReminderLabel = new Label("Reminder: Player profiles must be saved to CSV to be used.");
+        playerSaveReminderLabel.getStyleClass().add("label-info"); //info label style from CSS
+        //center just in case
+        HBox reminderWrapper = new HBox(playerSaveReminderLabel);
+        reminderWrapper.setAlignment(Pos.CENTER);
+        menuWrapper.getChildren().add(reminderWrapper);
+
         //player fields
         playerWrapper = new VBox();
         playerWrapper.setAlignment(Pos.CENTER);
         menuWrapper.getChildren().add(playerWrapper);
+
 
         //start game button
         startGameBtn.getStyleClass().add("start-button");
