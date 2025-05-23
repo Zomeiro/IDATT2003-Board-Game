@@ -25,7 +25,7 @@ A JavaFX-based board‑game developed as part of NTNU’s IDATT2003 course. Incl
 ### **1. Clone the project**
 
 ```sh
-git clone https://github.com/ditt-repo/boardgame.git](https://github.com/Zomeiro/IDATT2003-Board-Game.git
+git clone https://github.com/Zomeiro/IDATT2003-Board-Game.git
 cd boardgame
 ```
 
