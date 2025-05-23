@@ -6,17 +6,52 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality; 
 import javafx.stage.Stage;
 
 public class WinnerView {
 
-  public Scene createScene(Player winner, Stage stage) {
-    Label title = new Label("🎉 " + winner.getName() + " vant!");
-    Button close = new Button("Avslutt");
-    close.setOnAction(e -> stage.close());
+    /**
+     * Shows a simple pop-up window indicating the winner.
+     *
+     * @param winner     The player who won.
+     * @param ownerStage The main application stage, which will be the parent.
+     */
+    public void showWinnerPopup(Player winner, Stage ownerStage) {
+        Stage popupStage = new Stage();
 
-    VBox root = new VBox(20, title, close);
-    root.setAlignment(Pos.CENTER);
-    return new Scene(root, 300, 200);
-  }
+        Label title = new Label(winner.getName() + " won!");
+        Button playAgainButton = new Button("Play Again"); 
+        Button closeButton = new Button("Quit"); 
+
+        
+        playAgainButton.setOnAction(e -> {
+            popupStage.close(); 
+            new StartScreenView(ownerStage).show(); 
+        });
+        closeButton.setOnAction(e -> {
+            popupStage.close(); 
+            ownerStage.close(); 
+        });
+
+        VBox root = new VBox(20, title, playAgainButton, closeButton); 
+        root.setAlignment(Pos.CENTER);
+        root.setPadding(new javafx.geometry.Insets(20)); 
+
+        Scene popupScene = new Scene(root, 300, 200);
+
+        String cssPath = "/edu/ntnu/idatt2003/idatt2003boardgame/css/styles.css";
+        try {
+            popupScene.getStylesheets().add(getClass().getResource(cssPath).toExternalForm());
+        } catch (Exception e) { System.err.println("CSS not found, using default styles."); }
+
+        
+        popupStage.initOwner(ownerStage); 
+        popupStage.initModality(Modality.APPLICATION_MODAL); 
+        popupStage.setTitle("Game Over!");
+        popupStage.setScene(popupScene);
+        popupStage.setResizable(false);
+
+        popupStage.showAndWait();
+    }
 }

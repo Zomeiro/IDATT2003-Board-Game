@@ -29,8 +29,7 @@ public class SnakesAndLaddersInitializationService extends GameInitController {
 
         BoardGame boardGame = null;
         Consumer<Player> onGameWon = winner -> {
-            Scene winnerScene = new WinnerView().createScene(winner, primaryStage);
-            primaryStage.setScene(winnerScene);
+            new WinnerView().showWinnerPopup(winner, primaryStage); 
         };
 
         try {
@@ -66,12 +65,11 @@ public class SnakesAndLaddersInitializationService extends GameInitController {
                 return;
             }
 
-            // 3. Start the Game if BoardGame was created
             if (boardGame != null) {
                 GameInitializationService service = new GameInitializationService(boardGame, playerList);
                 new Ingame(service).createGameScene(this.primaryStage);
             } else {
-                 // This shouldn't happen if logic above is sound, but as a fallback:
+                 // shouldn't happen if logic above is sound
                  showAlert("Error", "Could not create the board game instance.");
             }
 

@@ -17,7 +17,9 @@ public class BoardView extends GridPane {
         this.tileLogic = board.getTiles();
         this.tileViews = new ArrayList<>();
 
-        this.setPrefSize(536, 482); // same as board
+        this.getStyleClass().add("board-view");
+
+        this.setPrefSize(536, 482); //same as board
         this.setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
         this.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
 
@@ -25,9 +27,8 @@ public class BoardView extends GridPane {
     }
 
     private void initializeBoard() {
-        this.setHgap(4); // horizontal gap between tiles
-        this.setVgap(4); // vertical gap between tiles
-        this.setStyle("-fx-background-color: lightblue;"); // background visible in gaps
+        this.setHgap(4); //horizontal gap between tiles
+        this.setVgap(4); //vertical gap between tiles
 
         Boolean movesRight = false;
 
@@ -48,7 +49,7 @@ public class BoardView extends GridPane {
 
             }
         }
-    
+
     }
 
 
@@ -56,7 +57,7 @@ public class BoardView extends GridPane {
         for (TileView tv : tileViews) {
             tv.updateVisual();
         }
-        
+
     }
 
     public BoardView getBoardVisual() {
@@ -64,7 +65,7 @@ public class BoardView extends GridPane {
     }
 
     public void displayEffects() {
-        
+
     }
 
 

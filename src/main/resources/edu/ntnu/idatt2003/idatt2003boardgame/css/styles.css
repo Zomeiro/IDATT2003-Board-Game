@@ -1,0 +1,181 @@
+/*Stylesheet mostly written by Gemini. Some manual*/
+
+.root {
+    -fx-font-family: "Segoe UI", "Cantarell", "Ubuntu", sans-serif;
+    -fx-background-color: #2D2D30;
+    -fx-text-fill: #E8E8E8;
+    -fx-font-size: 13px;
+}
+
+
+.label {
+    -fx-text-fill: #C0C0C0; 
+    -fx-font-size: 12px;
+}
+
+.label-header {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 24px;
+    -fx-font-weight: lighter;
+    -fx-padding: 10px 0 20px 0;
+}
+
+.label-info {
+    -fx-text-fill: #A0A0A0; 
+    -fx-font-size: 11px;
+}
+
+
+.button {
+    -fx-background-color: #3F3F46; 
+    -fx-text-fill: #E8E8E8;
+    -fx-border-color: #555555;
+    -fx-border-width: 1px;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+    -fx-padding: 8px 15px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 3, 0, 1, 1);
+    -fx-pref-height: 40px; 
+}
+
+.button:hover {
+    -fx-background-color: #4F4F56;
+    -fx-border-color: #008AE6; 
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 138, 230, 0.4), 8, 0, 0, 0);
+}
+
+.button:pressed {
+    -fx-background-color: #35353A;
+    -fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.4), 3, 0, 1, 1);
+}
+
+
+.start-button {
+    -fx-background-color: #007ACC;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-padding: 10px 30px;
+}
+.start-button:hover { -fx-background-color: #008AE6; }
+.start-button:pressed { -fx-background-color: #006BB3; }
+
+
+.icon-button {
+    -fx-background-color: #5A5A5A;
+    -fx-border-color: #3A3A3A;
+    -fx-padding: 3px;
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+    -fx-min-width: 46px; 
+    -fx-min-height: 46px;
+    -fx-pref-width: 46px;
+    -fx-pref-height: 46px;
+}
+.icon-button .image-view { 
+    -fx-background-radius: 50%;
+}
+.icon-button:hover {
+    -fx-border-color: #008AE6;
+    -fx-effect: dropshadow(gaussian, rgba(0, 138, 230, 0.6), 10, 0, 0, 0);
+}
+
+.combo-box {
+    -fx-background-color: #3F3F46;
+    -fx-text-fill: #E8E8E8;
+    -fx-border-color: #555555;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+    -fx-pref-height: 40px;
+    -fx-pref-width: 200px;
+}
+.combo-box .text-field {
+    -fx-text-fill: #E8E8E8;
+    -fx-background-color: transparent;
+}
+.combo-box .arrow { 
+    -fx-background-color: #E8E8E8;
+    -fx-padding: 5px;
+}
+.combo-box .list-cell {
+    -fx-background-color: #3F3F46;
+    -fx-text-fill: #E8E8E8;
+}
+.combo-box .list-cell:hover {
+    -fx-background-color: #4F4F56;
+    -fx-text-fill: #FFFFFF;
+}
+.combo-box-popup .list-view {
+    -fx-background-color: #3F3F46;
+    -fx-border-color: #555555;
+}
+
+.game-console-title {
+    -fx-text-fill: #FFFFFF;    /* Pure white */
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 0 0 5px 0;
+}
+
+.game-console-area .content {
+    -fx-background-color: black;
+    -fx-text-fill: #FFFFFF !important;      /* Forcibly set text to pure white */
+    -fx-font-family: "Segoe UI", "Verdana", "Arial", sans-serif;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;                /* Make the font bolder */
+}
+
+.game-init-wrapper {
+    -fx-alignment: top-center;
+    -fx-spacing: 20px;
+    -fx-padding: 30px;
+}
+.player-field-wrapper {
+     -fx-spacing: 10px;
+     -fx-alignment: center;
+}
+.board-selection-box {
+     -fx-spacing: 10px;
+     -fx-alignment: center;
+     -fx-padding: 10px 0 10px 0;
+}
+
+.ingame-root {
+    -fx-background-color: #2D2D30;
+}
+.side-column { 
+    -fx-background-color: #252526; 
+    -fx-padding: 20px;
+    -fx-spacing: 15px;
+    -fx-alignment: top-center;
+    -fx-pref-width: 200px;
+}
+.side-column .label {
+     -fx-text-fill: #E8E8E8;
+     -fx-font-size: 14px;
+}
+.dice-button-container { 
+    -fx-padding: 15px;
+    -fx-alignment: center;
+    -fx-background-color: #252526;
+    -fx-border-color: #404040;
+    -fx-border-width: 1px 0 0 0; 
+}
+
+.board-view {
+    -fx-padding: 10px;
+    -fx-background-color: #1E1E1E;
+}
+.board-tile {
+    -fx-border-color: #1A1A1A;
+    -fx-border-width: 1px;
+    -fx-alignment: center;
+}
+.board-tile-light { -fx-background-color: #555555; }
+.board-tile-dark { -fx-background-color: #484848; }
+.board-tile .label {
+    -fx-font-size: 9px;
+    -fx-text-fill: #FFFFFF;
+    -fx-padding: 2px;
+}

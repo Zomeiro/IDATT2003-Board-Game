@@ -14,6 +14,7 @@ import edu.ntnu.idatt2003.idatt2003boardgame.view.layers.SnakesNLadders.LadderLa
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -36,6 +37,15 @@ public class Ingame {
         this.sideColumn = gameInitializationService.getSideColumn();
     }
 
+    private void applyStyles(Scene scene) {
+        String cssPath = "/edu/ntnu/idatt2003/idatt2003boardgame/css/styles.css";
+        try {
+            scene.getStylesheets().add(getClass().getResource(cssPath).toExternalForm());
+        } catch (Exception e) {
+            System.err.println("CSS not found: " + cssPath);
+        }
+    }
+
     public void createGameScene(Stage primaryStage) {
         //center pane
         StackPane centerPane = new StackPane();
@@ -55,21 +65,30 @@ public class Ingame {
 
         //adding snake and ladder layers
         LadderLayer effectLayer = new LadderLayer(boardView, tilesWithLadders, tilesWithSnakes);
+        effectLayer.setMouseTransparent(true);
         centerPane.getChildren().add(effectLayer);
 
         BorderPane root = new BorderPane();
-        BorderPane.setAlignment(gameViewController.getDiceButton(), Pos.CENTER); // Center the button
-        root.setBottom(gameViewController.getDiceButton());
+        root.getStyleClass().add("ingame-root");
+
+        HBox diceContainer = gameViewController.getDiceButton();
+        diceContainer.getStyleClass().add("dice-button-container");
+
+        root.setBottom(diceContainer);
         root.setLeft(sideColumn);
         root.setCenter(centerPane);
 
         //scene and primarystage setup
-        Scene scene = new Scene(root, 800, 700); // Increased size for better layout
+        Scene scene = new Scene(root);
+        applyStyles(scene); // Apply CSS
         primaryStage.setTitle("Snakes & Ladders - In Game");
         primaryStage.setScene(scene);
+        
+        primaryStage.setMinHeight(600);
+        primaryStage.setMinWidth(850);
         primaryStage.show();
 
-        
+
         gameViewController.initializeAndStartGame();
         boardView.updateEntireBoard();
     }

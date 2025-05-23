@@ -7,7 +7,9 @@ import edu.ntnu.idatt2003.idatt2003boardgame.model.GameConfig;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.Player;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.observer.GameModelObserver;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.observer.LoggerObserver;
+// import edu.ntnu.idatt2003.idatt2003boardgame.model.observer.TextUIObserver; // REMOVED
 import edu.ntnu.idatt2003.idatt2003boardgame.view.elements.BoardView;
+import edu.ntnu.idatt2003.idatt2003boardgame.view.elements.GameConsoleView; // IMPORTED
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,101 +19,109 @@ import java.util.function.Consumer;
 
 public final class BoardGame implements GameModelObserver {
 
-  private final Board board;
-  private final List<Player> players;
-  private final GameController gameController;
-  private final GameViewController gameViewController;
-  private final BoardView boardView;
+    private final Board board;
+    private final List<Player> players;
+    private final GameController gameController;
+    private final GameViewController gameViewController;
+    private final BoardView boardView;
+    private final GameConsoleView gameConsoleView; // ADDED FIELD
 
-  private final List<GameModelObserver> observers = new CopyOnWriteArrayList<>();
+    private final List<GameModelObserver> observers = new CopyOnWriteArrayList<>();
 
-  public BoardGame(Board board, List<Player> players, GameConfig config, Consumer<Player> onGameWon) {
-    this.board = Objects.requireNonNull(board);
-    this.players = new ArrayList<>(players);
+    public BoardGame(Board board, List<Player> players, GameConfig config, Consumer<Player> onGameWon) {
+        this.board = Objects.requireNonNull(board);
+        this.players = new ArrayList<>(players);
 
-    this.gameController = new GameController(board, this.players);
-    this.boardView = new BoardView(board);
+        this.gameController = new GameController(board, this.players);
+        this.boardView = new BoardView(board);
+        this.gameConsoleView = new GameConsoleView(); // CREATED HERE
 
-    //give start action and roll dice action to gamecontroller (got from gemini)
-    this.gameViewController = new GameViewController(
-            () -> gameController.handleRollDice(),
-            () -> gameController.start(),       
-            boardView,
-            onGameWon
-    );
+        //give start action and roll dice action to gamecontroller (got from gemini)
+        this.gameViewController = new GameViewController(
+                () -> gameController.handleRollDice(),
+                () -> gameController.start(),
+                boardView,
+                onGameWon
+        );
 
-    this.gameController.addObserver(gameViewController);
-    this.gameController.addObserver(new LoggerObserver());
-    //link gameController with GameViewController
-    this.gameController.setVisualController(this.gameViewController);
-  }
+        this.gameController.addObserver(gameViewController);
+        this.gameController.addObserver(new LoggerObserver());
+        // this.gameController.addObserver(new TextUIObserver()); // REMOVED
+        this.gameController.addObserver(this.gameConsoleView); // ADDED NEW CONSOLE
+        //link gameController with GameViewController
+        this.gameController.setVisualController(this.gameViewController);
+    }
 
-  public void start() {
-    gameController.start();
-    boardView.updateEntireBoard();
-  }
+    public void start() {
+        gameController.start();
+        boardView.updateEntireBoard();
+    }
 
-  public void rollDice() {
-    gameController.handleRollDice();
-  }
+    public void rollDice() {
+        gameController.handleRollDice();
+    }
 
-//observer managment
-  public void addObserver(GameModelObserver observer) {
-    observers.add(observer);
-  }
+    //observer managment
+    public void addObserver(GameModelObserver observer) {
+        observers.add(observer);
+    }
 
-  public void removeObserver(GameModelObserver observer) {
-    observers.remove(observer);
-  }
+    public void removeObserver(GameModelObserver observer) {
+        observers.remove(observer);
+    }
 
 
-  @Override
-  public void onDiceRolled(int value) {
-    observers.forEach(o -> o.onDiceRolled(value));
-  }
+    @Override
+    public void onDiceRolled(int value) {
+        observers.forEach(o -> o.onDiceRolled(value));
+    }
 
-  @Override
-  public void onPlayerMoved(Player player, int newPosition) {
-    observers.forEach(o -> o.onPlayerMoved(player, newPosition));
-  }
+    @Override
+    public void onPlayerMoved(Player player, int newPosition) {
+        observers.forEach(o -> o.onPlayerMoved(player, newPosition));
+    }
 
-  @Override
-  public void onTurnChanged(Player newPlayer) {
-    observers.forEach(o -> o.onTurnChanged(newPlayer));
-  }
+    @Override
+    public void onTurnChanged(Player newPlayer) {
+        observers.forEach(o -> o.onTurnChanged(newPlayer));
+    }
 
-  @Override
-  public void onGameWon(Player winner) {
-    observers.forEach(o -> o.onGameWon(winner));
-  }
+    @Override
+    public void onGameWon(Player winner) {
+        observers.forEach(o -> o.onGameWon(winner));
+    }
 
-//getters for UI
-  public Board getBoard() {
-    return board;
-  }
+    //getters for UI
+    public Board getBoard() {
+        return board;
+    }
 
-  public BoardView getBoardView() {
-    return boardView;
-  }
+    public BoardView getBoardView() {
+        return boardView;
+    }
 
-  public GameController getGameController() {
-    return gameController;
-  }
+    public GameController getGameController() {
+        return gameController;
+    }
 
-  public GameViewController getGameViewController() {
-    return gameViewController;
-  }
+    public GameViewController getGameViewController() {
+        return gameViewController;
+    }
 
-  public List<Player> getPlayers() {
-    return List.copyOf(players);
-  }
+    public GameConsoleView getGameConsoleView() {
+        return gameConsoleView;
+    }
 
-  public boolean isFinished() {
-    return gameController.isFinished();
-  }
+    public List<Player> getPlayers() {
+        return List.copyOf(players);
+    }
 
-  public String getWinnerName() {
-    Player winner = gameController.getWinner();
-    return (winner != null) ? winner.getName() : null;
-  }
+    public boolean isFinished() {
+        return gameController.isFinished();
+    }
+
+    public String getWinnerName() {
+        Player winner = gameController.getWinner();
+        return (winner != null) ? winner.getName() : null;
+    }
 }

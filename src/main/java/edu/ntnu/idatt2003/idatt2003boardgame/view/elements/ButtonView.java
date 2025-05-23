@@ -11,13 +11,7 @@ public class ButtonView extends HBox {
         Button rollDiceButton = new Button("Roll dice");
         rollDiceButton.setOnAction(e -> {
             onDiceRoll.run();
-            
         });
-        
         this.getChildren().add(rollDiceButton);
-        this.setSpacing(10);
-        
     }
-
 }
-

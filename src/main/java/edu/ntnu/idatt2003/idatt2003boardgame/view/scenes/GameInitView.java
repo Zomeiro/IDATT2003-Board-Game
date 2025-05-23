@@ -43,22 +43,25 @@ public class GameInitView {
         this.controller = controller;
     }
 
+    private void applyStyles(Scene scene) {
+        String cssPath = "/edu/ntnu/idatt2003/idatt2003boardgame/css/styles.css";
+        try {
+            scene.getStylesheets().add(getClass().getResource(cssPath).toExternalForm());
+        } catch (Exception e) {
+            System.err.println("CSS not found: " + cssPath);
+        }
+    }
+
     public void init() {
         primaryStage.setTitle("Snakes & Ladders Config");
 
         VBox menuWrapper = new VBox();
-        menuWrapper.setAlignment(Pos.TOP_CENTER);
-        menuWrapper.setSpacing(20); // Add some spacing
-        menuWrapper.setPadding(new Insets(20)); // Add some padding
-
-        String buttonStyle = "-fx-pref-height: 30; -fx-background-color: rgba(200,200,200);";
+        menuWrapper.getStyleClass().add("game-init-wrapper");
 
         //board Selection
-        HBox boardSelectionBox = new HBox(10);
-        boardSelectionBox.setAlignment(Pos.CENTER);
-        boardComboBox.setPrefWidth(200);
+        HBox boardSelectionBox = new HBox();
+        boardSelectionBox.getStyleClass().add("board-selection-box");
         boardComboBox.setPromptText("Select Board Preset/Random");
-        loadFileButton.setStyle(buttonStyle);
         boardSelectionBox.getChildren().addAll(boardComboBox, loadFileButton);
 
         VBox boardWrapper = new VBox(5);
@@ -67,7 +70,6 @@ public class GameInitView {
         menuWrapper.getChildren().add(boardWrapper);
 
         //add player button
-        addPlayerBtn.setStyle(buttonStyle);
         HBox addPlayerBtnWrapper = new HBox();
         addPlayerBtnWrapper.getChildren().add(addPlayerBtn);
         addPlayerBtnWrapper.setAlignment(Pos.CENTER);
@@ -75,12 +77,11 @@ public class GameInitView {
 
         //player fields
         playerWrapper = new VBox();
-        playerWrapper.setSpacing(10);
         playerWrapper.setAlignment(Pos.CENTER);
         menuWrapper.getChildren().add(playerWrapper);
 
         //start game button
-        startGameBtn.setStyle(buttonStyle + " -fx-font-size: 14px; -fx-font-weight: bold;");
+        startGameBtn.getStyleClass().add("start-button");
         HBox startButtonWrapper = new HBox();
         startButtonWrapper.setAlignment(Pos.CENTER);
         startButtonWrapper.getChildren().add(startGameBtn);
@@ -90,12 +91,13 @@ public class GameInitView {
         addPlayerBtn.setOnAction(e -> controller.addPlayer());
         startGameBtn.setOnAction(e -> controller.startGame());
 
-        Scene menu = new Scene(menuWrapper, 600, 600);
+        Scene menu = new Scene(menuWrapper);
+        applyStyles(menu); // Apply CSS
         primaryStage.setScene(menu);
     }
 
     public void addPlayerField(
-        String[] playerNames, int index, 
+        String[] playerNames, int index,
         String initialIconFileName,
         EventHandler<ActionEvent> iconBtnHandler,
         EventHandler<ActionEvent> dropdownHandler,
@@ -105,8 +107,6 @@ public class GameInitView {
         ComboBox<String> playerDropdown = new ComboBox<>();
         playerDropdown.setPromptText("Player " + (index + 1));
         playerDropdown.setEditable(true);
-        playerDropdown.setPrefHeight(40);
-        playerDropdown.setPrefWidth(180);
 
         if (playerNames != null) {
             for (String playername : playerNames) {
@@ -118,6 +118,7 @@ public class GameInitView {
         playerDropdowns.add(playerDropdown);
 
         Button iconBtn = new Button();
+        iconBtn.getStyleClass().add("icon-button");
         iconBtns.add(iconBtn);
 
         ImageView buttonIMG = new ImageView(initialIconImage);
@@ -128,9 +129,9 @@ public class GameInitView {
         Button saveButton = new Button("Save new");
         saveButtons.add(saveButton);
 
-        HBox playerFieldWrapper = new HBox(10);
+        HBox playerFieldWrapper = new HBox();
+        playerFieldWrapper.getStyleClass().add("player-field-wrapper");
         playerFieldWrapper.getChildren().addAll(iconBtn, playerDropdown, saveButton);
-        playerFieldWrapper.setAlignment(Pos.CENTER);
         playerFieldWrappers.add(playerFieldWrapper);
 
         playerWrapper.getChildren().add(playerFieldWrapper);
@@ -144,7 +145,7 @@ public class GameInitView {
     public ComboBox<String> getBoardComboBox() { return boardComboBox; }
     public Button getLoadFileButton() { return loadFileButton; }
 
-    //setters 
+    //setters
     public void setBoardOptions(List<String> options) {
         boardComboBox.getItems().setAll(options);
     }
@@ -161,9 +162,6 @@ public class GameInitView {
     public void setBoardComboBoxValue(String value) {
         boardComboBox.setValue(value);
     }
-
-
-
 
     public void updateIconButton(int playerIndex, Image iconImage) {
         if (playerIndex >= 0 && playerIndex < iconBtns.size()) {

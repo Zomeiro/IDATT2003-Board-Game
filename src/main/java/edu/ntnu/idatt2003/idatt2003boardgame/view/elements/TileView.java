@@ -56,7 +56,7 @@ public class TileView extends StackPane {
     public TileView(Tile tile) {
         this.tile = tile;
         this.background = new Rectangle(50, 50);
-        background.setFill(Color.rgb(255, 255, 224));
+        background.setFill(Color.rgb(212, 187, 237));
 
         this.iconView = new ImageView();
         iconView.setFitWidth(40);
@@ -97,7 +97,7 @@ public class TileView extends StackPane {
         List<Player> players = tile.getPlayers();
 
         if (!players.isEmpty()) {
-            background.setFill(Color.LIGHTYELLOW);
+            background.setFill(Color.rgb(212, 187, 237));
 
             if (players.size() == 1) {
                 String iconPath = players.get(0).getIcon();

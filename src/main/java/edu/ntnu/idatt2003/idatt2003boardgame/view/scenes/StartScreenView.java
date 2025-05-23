@@ -1,15 +1,12 @@
 package edu.ntnu.idatt2003.idatt2003boardgame.view.scenes;
 
 import edu.ntnu.idatt2003.idatt2003boardgame.service.SnakesAndLaddersInitializationService;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class StartScreenView {
     private final Stage primaryStage;
@@ -18,37 +15,65 @@ public class StartScreenView {
         this.primaryStage = primaryStage;
     }
 
-    public void init() {
-
-        primaryStage.setTitle("primaryStage");
-
-        VBox menuWrapper = new VBox();
-        GridPane menuPane = new GridPane();
-        menuWrapper.getChildren().add(menuPane);
-        menuPane.setAlignment(Pos.CENTER);
-        menuWrapper.setMargin(menuPane, new Insets(50,50,50,50));
-
-        Button b1 = new Button("Snakes & ladders");
-        Button b2 = new Button("Goose game???");
-        Button b3 = new Button("Ludo!");
-
-        b1.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                new SnakesAndLaddersInitializationService(primaryStage).start();
-            }
-        });
-
-
-        Scene menu = new Scene(menuWrapper, 600, 600);
-        menuPane.getChildren().addAll(b1, b2, b3);
-        GridPane.setColumnIndex(b1,0);
-        GridPane.setColumnIndex(b2,1);
-        GridPane.setColumnIndex(b3,2);
-
-        primaryStage.setScene(menu);
+    /**
+     * Helper method to apply CSS styles to the scene.
+     * @param scene The Scene to apply styles to.
+     */
+    private void applyStyles(Scene scene) {
+        String cssPath = "/edu/ntnu/idatt2003/idatt2003boardgame/css/styles.css";
+        try {
+            String cssUrl = getClass().getResource(cssPath).toExternalForm();
+            scene.getStylesheets().add(cssUrl);
+        } catch (Exception e) {
+            System.err.println("CSS not found for StartScreenView: " + cssPath);
+        }
     }
 
-    public void start() {
+    public void init() {
+
+        primaryStage.setTitle("Board Game Central");
+
+        VBox menuWrapper = new VBox();
+        menuWrapper.getStyleClass().add("start-screen-wrapper"); 
+        menuWrapper.setAlignment(Pos.CENTER); 
+        menuWrapper.setSpacing(30); 
+
+        Label titleLabel = new Label("Board game!");
+        titleLabel.getStyleClass().add("label-header"); 
+
+        Button snakesButton = new Button("Play Snakes & Ladders");
+        snakesButton.getStyleClass().add("start-button"); 
+        snakesButton.setPrefWidth(250); 
+
+        snakesButton.setOnAction(e -> {
+            new SnakesAndLaddersInitializationService(primaryStage).start();
+        });
+
+        menuWrapper.getChildren().addAll(titleLabel, snakesButton); 
+
+        Scene menu = new Scene(menuWrapper); 
+        applyStyles(menu); 
+        primaryStage.setScene(menu);
+        
+        primaryStage.setHeight(500);
+        primaryStage.setWidth(600);
+
+        primaryStage.setMinHeight(300);
+        primaryStage.setMinWidth(400);
+    }
+
+    /**
+     * Initializes and shows the start screen.
+     */
+    public void show() {
+        init();
         primaryStage.show();
+    }
+
+    /**
+     * Kept for potential compatibility.
+     */
+    public void start() {
+        show();
     }
 }

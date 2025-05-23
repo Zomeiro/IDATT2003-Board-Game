@@ -7,6 +7,7 @@ import edu.ntnu.idatt2003.idatt2003boardgame.model.Board;
 import edu.ntnu.idatt2003.idatt2003boardgame.model.Player;
 import edu.ntnu.idatt2003.idatt2003boardgame.view.elements.BoardView;
 import edu.ntnu.idatt2003.idatt2003boardgame.view.elements.SideColumnView;
+import edu.ntnu.idatt2003.idatt2003boardgame.view.elements.GameConsoleView;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
@@ -28,10 +29,15 @@ public class GameInitializationService {
      */
     public GameInitializationService(BoardGame boardGame, List<Player> players) {
         this.boardGame = boardGame;
-        if (this.boardGame == null || this.boardGame.getGameViewController() == null) {
-            throw new IllegalArgumentException("BoardGame and its ViewController must be initialized.");
+        //ensures boardgame and components are initialized
+        if (this.boardGame == null || this.boardGame.getGameViewController() == null || this.boardGame.getGameConsoleView() == null) {
+            throw new IllegalArgumentException("BoardGame, its ViewController, and its ConsoleView must be initialized.");
         }
-        this.sideColumnView = new SideColumnView(players, boardGame.getGameViewController().getDiceAnimation());
+        this.sideColumnView = new SideColumnView(
+                players,
+                boardGame.getGameViewController().getDiceAnimation(),
+                boardGame.getGameConsoleView() 
+        );
     }
 
     public Board getBoard() {
