@@ -36,10 +36,10 @@ public class DiceAnimation extends GridPane {
         IntStream.rangeClosed(0, 8)
                 .forEach(i -> {
                     StackPane die = new StackPane();
-                    Rectangle background = new Rectangle(75, 75, Color.WHITE);
+                    Rectangle background = new Rectangle(75, 75, Color.BLACK);
                     background.setStroke(null);
 
-                    Circle circle = new Circle(20, Color.WHITE);
+                    Circle circle = new Circle(20, Color.BLACK);
                     points.add(circle);
 
                     die.getChildren().addAll(background, circle);
@@ -71,7 +71,7 @@ public class DiceAnimation extends GridPane {
 }
 
     public void displayFace(int roll) {
-        points.forEach(c -> c.setFill(Color.WHITE));
+        points.forEach(c -> c.setFill(Color.BLACK));
 
         switch (roll) {
             case 1 ->
@@ -93,7 +93,7 @@ public class DiceAnimation extends GridPane {
 
     private void setPips(int... indices) {
         for (int i : indices) {
-            points.get(i).setFill(Color.BLACK);
+            points.get(i).setFill(Color.WHITE);
         }
     }
 

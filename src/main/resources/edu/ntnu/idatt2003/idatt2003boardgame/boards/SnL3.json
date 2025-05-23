@@ -1,0 +1,13 @@
+{
+    "name": "SnL3",
+    "tiles": [
+        { "tile": 8, "effect": "Ladder", "target": 40 },
+        { "tile": 18, "effect": "Snake", "target": 5 },
+        { "tile": 25, "effect": "Ladder", "target": 55 },
+        { "tile": 33, "effect": "LoseTurn"},
+        { "tile": 48, "effect": "Back"},
+        { "tile": 62, "effect": "LoseTurn"},
+        { "tile": 75, "effect": "Ladder", "target": 95 },
+        { "tile": 80, "effect": "Snake", "target": 50 }
+    ]
+}

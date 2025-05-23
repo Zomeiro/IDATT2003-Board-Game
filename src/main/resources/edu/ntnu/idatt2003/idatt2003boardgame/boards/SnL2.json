@@ -1,0 +1,13 @@
+{
+    "name": "SnL2",
+    "tiles": [
+        { "tile": 5, "effect": "Ladder", "target": 25 },
+        { "tile": 12, "effect": "Snake", "target": 2 },
+        { "tile": 30, "effect": "Ladder", "target": 60 },
+        { "tile": 35, "effect": "LoseTurn"},
+        { "tile": 50, "effect": "Back"},
+        { "tile": 65, "effect": "LoseTurn"},
+        { "tile": 72, "effect": "Ladder", "target": 90 },
+        { "tile": 85, "effect": "Snake", "target": 45 }
+    ]
+}

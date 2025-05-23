@@ -8,37 +8,37 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 public class PlayerRowsView extends VBox {
     private List<HBox> playerRows = new ArrayList<>();
 
     public PlayerRowsView(List<Player> players) {
+        this.setSpacing(10);
+        this.setAlignment(Pos.CENTER);
         players.stream().forEach(i -> createPlayerRow(i));
     }
 
     public void createPlayerRow(Player player) {
         HBox row = new HBox();
-        row.setBackground(Background.fill(Color.WHITE));
-
-        ImageView playerIcon = new ImageView(new Image(getClass().getResourceAsStream(player.getIcon())));
+        row.getStyleClass().add("player-row"); 
+        ImageView playerIcon = new ImageView();
+        try {
+            playerIcon.setImage(new Image(getClass().getResourceAsStream(player.getIcon())));
+        } catch (Exception e) {
+            System.err.println("Could not load player icon: " + player.getIcon());
+        }
+        playerIcon.getStyleClass().add("player-icon"); 
 
         playerIcon.setFitWidth(50);
         playerIcon.setFitHeight(50);
         Label name = new Label(player.getName());
+        name.getStyleClass().add("player-name-label"); 
 
-        name.setAlignment(Pos.CENTER);
-        name.setFont(Font.font("System", FontWeight.BOLD, 18));
+    
         name.setPrefWidth(100);
 
-        row.setAlignment(Pos.CENTER);
-
-        row.setSpacing(75);
 
         row.getChildren().addAll(playerIcon, name);
 
@@ -48,7 +48,7 @@ public class PlayerRowsView extends VBox {
 
     public PlayerRowsView getPlayerRows() {
         return this;
-    }  
- 
-    
+    }
+
+
 }

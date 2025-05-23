@@ -59,15 +59,18 @@ public class GameController {
     public void handleRollDice() {
         int diceRoll = dice.roll();
         gameModel.fireDiceRolled(diceRoll);
-        moveBy(playerWhoseTurn, diceRoll);
-        if (playerWhoseTurn.getPosition() >= board.getTileCount()) {
+
+        int nextPosition = playerWhoseTurn.getPosition() + diceRoll;
+
+        if (nextPosition >= board.getTileCount()) {
             winner = playerWhoseTurn;
             finished = true;
             gameModel.fireGameWon(playerWhoseTurn);
+            return;
         }
-        if (!finished) {
-            advanceTurn();
-        }
+
+        moveBy(playerWhoseTurn, diceRoll);
+        advanceTurn();
     }
 
     public void advanceTurn() {
