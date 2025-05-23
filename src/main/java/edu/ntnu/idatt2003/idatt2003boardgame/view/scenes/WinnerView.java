@@ -9,6 +9,15 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality; 
 import javafx.stage.Stage;
 
+/**
+ * Represents the view that displays the winner of the game.
+ * This class is responsible for creating a pop-up window
+ * that shows the name of the winning player and provides options
+ * to play again or quit the game.
+ * 
+ * @author Bjørn Adam Vangen
+ */
+
 public class WinnerView {
 
     /**

@@ -9,6 +9,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority; // Import Priority
 import javafx.scene.layout.VBox;
 
+/**
+ * A JavaFX {@link VBox} component that serves as a side column in the game UI.
+ * It typically displays game-related information such as dice animations,
+ * player information (via {@link PlayerRowsView}), and a game console (via {@link GameConsoleView}).
+ * 
+ * @author Hector Mendana Morales
+ * @author Bjørn Adam Vangen (styling and game console)
+ */
 public class SideColumnView extends VBox {
 
     /**
@@ -35,6 +43,12 @@ public class SideColumnView extends VBox {
         this.getChildren().add(gameConsole.getViewNode());
     }
 
+    /**
+     * Returns this {@code SideColumnView} instance.
+     * This method effectively returns the VBox itself, which acts as the main column container.
+     *
+     * @return this {@code SideColumnView} object.
+     */
     public VBox getColumn() {
         return this;
     }

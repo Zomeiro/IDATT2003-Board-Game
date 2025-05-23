@@ -22,6 +22,9 @@ import javafx.stage.Stage;
 /**
  * Sets up and displays the main game scene, including the board,
  * side column, and game controls.
+ * 
+ * @author Hector Mendana Morales
+ * @author Bjørn Adam Vangen
  */
 public class Ingame {
 
@@ -30,6 +33,14 @@ public class Ingame {
     private final GameViewController gameViewController;
     private final VBox sideColumn;
 
+    /**
+     * Constructs an Ingame scene manager.
+     * It initializes references to core game components like the board,
+     * board view, game view controller, and side column UI element
+     * from the provided GameInitializationService.
+     *
+     * @param gameInitializationService The service containing initialized game components.
+     */
     public Ingame(GameInitializationService gameInitializationService) {
         this.board = gameInitializationService.getBoard();
         this.boardView = gameInitializationService.getBoardVisual();
@@ -46,6 +57,14 @@ public class Ingame {
         }
     }
 
+    /**
+     * Creates and configures the main game scene and displays it on the primary stage.
+     * This method sets up the layout with the board view, effect layers (ladders/snakes),
+     * dice controls, and side column. It applies CSS styling, sets stage properties,
+     * initializes the game logic, and performs an initial update of the board visuals.
+     *
+     * @param primaryStage The primary stage of the JavaFX application where the game scene will be shown.
+     */
     public void createGameScene(Stage primaryStage) {
         //center pane
         StackPane centerPane = new StackPane();
@@ -83,7 +102,7 @@ public class Ingame {
         applyStyles(scene); // Apply CSS
         primaryStage.setTitle("Snakes & Ladders - In Game");
         primaryStage.setScene(scene);
-        
+
         primaryStage.setMinHeight(600);
         primaryStage.setMinWidth(850);
         primaryStage.show();

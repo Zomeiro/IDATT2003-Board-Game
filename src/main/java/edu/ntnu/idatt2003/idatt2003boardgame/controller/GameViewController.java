@@ -11,6 +11,8 @@ import javafx.scene.layout.HBox;
 /**
  * Manages the visual aspects and user interactions of the game,
  * observing the model (via GameController) and updating the view.
+ * 
+ * @author Bjørn Adam Vangen
  */
 public class GameViewController implements GameModelObserver {
     private final DiceAnimation diceVisual = new DiceAnimation();
@@ -45,29 +47,64 @@ public class GameViewController implements GameModelObserver {
         }
     }
 
+    /**
+     * Gets the HBox containing the dice button UI element.
+     *
+     * @return The HBox for the dice button.
+     */
     public HBox getDiceButton() {
         return diceButton;
     }
 
+    /**
+     * Gets the DiceAnimation object responsible for visually displaying dice rolls.
+     *
+     * @return The DiceAnimation instance.
+     */
     public DiceAnimation getDiceAnimation() {
         return diceVisual;
     }
 
+    /**
+     * Called when a dice roll event occurs in the game model.
+     * This implementation updates the dice visual display.
+     *
+     * @param value The value rolled on the dice.
+     */
     @Override
     public void onDiceRolled(int value) {
         diceVisual.displayRoll(value);
     }
 
+    /**
+     * Called when a player moved event occurs in the game model.
+     * This implementation triggers an update of the entire board view.
+     *
+     * @param player The player who moved.
+     * @param newPosition The new tile number (1-based) the player moved to.
+     */
     @Override
     public void onPlayerMoved(Player player, int newPosition) {
         boardView.updateEntireBoard();
     }
 
+    /**
+     * Called when the turn changes to a new player in the game model.
+     *
+     * @param newPlayer The player whose turn it is now.
+     */
     @Override
     public void onTurnChanged(Player newPlayer) {
         //add something here to highlight current player if time
     }
 
+    /**
+     * Called when a player wins the game.
+     * This implementation prints the winner's name to the console and
+     * invokes the onGameWonCallback.
+     *
+     * @param winner The player who won the game.
+     */
     @Override
     public void onGameWon(Player winner) {
         System.out.println("Winner: " + winner.getName());

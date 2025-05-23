@@ -17,11 +17,24 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+/**
+ * A JavaFX {@link GridPane} component that visually represents a single die face
+ * and animates a dice roll. It uses a 3x3 grid of circles (pips) to display
+ * standard die faces from 1 to 6.
+ * 
+ * @author Hector Mendana Morales
+ */
 public class DiceAnimation extends GridPane {
 
     private List<Circle> points;
     private final Random random = new Random();
 
+    /**
+     * Constructs a new DiceAnimation component.
+     * Initializes a 3x3 grid of StackPanes, each containing a background
+     * rectangle and a circle (pip) to represent a part of the die face.
+     * The initial display shows all pips as black (inactive).
+     */
     public DiceAnimation() {
         this.points = new ArrayList<>(9);
 
@@ -48,6 +61,12 @@ public class DiceAnimation extends GridPane {
 
     }
 
+    /**
+     * Displays a dice roll animation.
+     * It rapidly shows several random "fake" rolls before settling on the final roll value.
+     *
+     * @param finalRoll The final value (1-6) that the die should display after the animation.
+     */
     public void displayRoll(int finalRoll) {
     Timeline timeline = new Timeline();
 
@@ -70,6 +89,13 @@ public class DiceAnimation extends GridPane {
     timeline.play();
 }
 
+    /**
+     * Updates the visual display of the die to show the specified roll value.
+     * It configures the visibility (color) of the pips to represent the die face.
+     *
+     * @param roll The die face value to display (1-6).
+     * @throws IllegalArgumentException if the roll value is not between 1 and 6.
+     */
     public void displayFace(int roll) {
         points.forEach(c -> c.setFill(Color.BLACK));
 

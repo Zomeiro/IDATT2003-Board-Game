@@ -11,8 +11,26 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * A JavaFX Group that represents the visual appearance of a single ladder.
+ * It constructs the ladder using two pillars and a series of steps,
+ * styled with gradients, rounded corners, and shadows to create a
+ * more detailed and aesthetically pleasing look.
+ * 
+ * @author Hector Mendana Morales (original ladder code)
+ * @author Bjørn Adam Vangen (visual enhancements)
+ * Most of the convoluted code was written by Gemini to save time.
+ */
 public class LadderVisual extends Group {
     //parts of this code written by Gemini
+    /**
+     * Constructs a visual representation of a ladder with a specified length.
+     * The ladder consists of two main pillars and evenly spaced steps between them.
+     * Visual details include rounded corners, color gradients for a 3D effect,
+     * and drop shadows.
+     *
+     * @param length The overall length of the ladder's pillars.
+     */
     public LadderVisual(double length) {
         //drop shadow
         DropShadow shadow = new DropShadow();
@@ -24,9 +42,9 @@ public class LadderVisual extends Group {
         //gradient for rounded look
         LinearGradient pillarGradient = new LinearGradient(
                 0, 0, 1, 0, true, CycleMethod.NO_CYCLE,
-                new Stop(0, Color.web("#5D4037")),    
-                new Stop(0.5, Color.web("#795548")),  
-                new Stop(1, Color.web("#5D4037"))     
+                new Stop(0, Color.web("#5D4037")),
+                new Stop(0.5, Color.web("#795548")),
+                new Stop(1, Color.web("#5D4037"))
         );
 
         //pillar properties
@@ -41,7 +59,7 @@ public class LadderVisual extends Group {
         leftPillar.setWidth(pillarWidth);
         leftPillar.setHeight(length);
         leftPillar.setFill(pillarGradient);
-        leftPillar.setArcWidth(cornerRadius * 2); 
+        leftPillar.setArcWidth(cornerRadius * 2);
         leftPillar.setArcHeight(cornerRadius * 2);
         leftPillar.setEffect(shadow);
 
@@ -58,32 +76,37 @@ public class LadderVisual extends Group {
 
         //steps
         ArrayList<Rectangle> steps = new ArrayList<>();
-        int stepAmount = (int) (length / 25); 
+        int stepAmount = (int) (length / 25);
         double stepHeight = 6;
-        double stepYOffset = 20; 
-        double stepSpacing = (length - stepYOffset * 2) / (stepAmount > 1 ? stepAmount -1 : 1); 
-        Color stepColor = Color.web("#6D4C41"); 
+        double stepYOffset = 20;
+        double stepSpacing = (length - stepYOffset * 2) / (stepAmount > 1 ? stepAmount -1 : 1);
+        Color stepColor = Color.web("#6D4C41");
 
         IntStream.range(0, stepAmount)
                 .forEach(i -> {
                     Rectangle step = new Rectangle();
-                    step.setX(pillarWidth - (cornerRadius / 2)); 
-                    step.setY(stepYOffset + i * stepSpacing - (stepHeight / 2)); 
-                    step.setWidth(ladderWidth - pillarWidth + cornerRadius); 
+                    step.setX(pillarWidth - (cornerRadius / 2));
+                    step.setY(stepYOffset + i * stepSpacing - (stepHeight / 2));
+                    step.setWidth(ladderWidth - pillarWidth + cornerRadius);
                     step.setHeight(stepHeight);
                     step.setFill(stepColor);
-                    step.setArcWidth(cornerRadius); 
+                    step.setArcWidth(cornerRadius);
                     step.setArcHeight(cornerRadius);
-                    step.setEffect(shadow); 
+                    step.setEffect(shadow);
 
                     steps.add(step);
                 });
 
-        
+
         this.getChildren().addAll(steps);
         this.getChildren().addAll(rightPillar, leftPillar);
     }
 
+    /**
+     * Returns this LadderVisual instance, which is a JavaFX Group.
+     *
+     * @return This LadderVisual Group object.
+     */
     public Group getLadder() {
         return this;
     }

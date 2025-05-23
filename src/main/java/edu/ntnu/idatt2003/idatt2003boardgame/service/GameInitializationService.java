@@ -15,6 +15,8 @@ import java.util.List;
 /**
  * Service to hold and provide access to the core components
  * required for the Ingame scene, based on an initialized BoardGame.
+ * 
+ * @author Bjørn Adam Vangen
  */
 public class GameInitializationService {
 
@@ -36,30 +38,61 @@ public class GameInitializationService {
         this.sideColumnView = new SideColumnView(
                 players,
                 boardGame.getGameViewController().getDiceAnimation(),
-                boardGame.getGameConsoleView() 
+                boardGame.getGameConsoleView()
         );
     }
 
+    /**
+     * Gets the game board associated with the initialized game.
+     *
+     * @return The {@link Board} instance.
+     */
     public Board getBoard() {
         return boardGame.getBoard();
     }
 
+    /**
+     * Gets the visual representation of the game board.
+     *
+     * @return The {@link BoardView} instance.
+     */
     public BoardView getBoardVisual() {
         return boardGame.getBoardView();
     }
 
+    /**
+     * Gets the game logic controller.
+     *
+     * @return The {@link GameController} instance.
+     */
     public GameController getGameController() {
         return boardGame.getGameController();
     }
 
+    /**
+     * Gets the game's visual/UI controller.
+     *
+     * @return The {@link GameViewController} instance.
+     */
     public GameViewController getVisualController() {
         return boardGame.getGameViewController();
     }
 
+    /**
+     * Gets the side column UI component, which typically contains player information,
+     * dice animations, and the game console.
+     *
+     * @return The {@link VBox} representing the side column.
+     */
     public VBox getSideColumn() {
         return sideColumnView.getColumn();
     }
 
+    /**
+     * Gets the fully initialized BoardGame instance.
+     *
+     * @return The {@link BoardGame} instance.
+     */
     public BoardGame getBoardGame() {
         return boardGame;
     }

@@ -19,6 +19,7 @@
   </properties>
 
   <dependencies>
+  <!--JavaFX dependencies-->
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
@@ -36,7 +37,7 @@
       <artifactId>javafx-graphics</artifactId>
       <version>${javafx.version}</version>
     </dependency>
-
+    <!--junit dependencies-->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
