@@ -11,11 +11,23 @@ import javafx.scene.paint.Color;
  */
 public class BackToStartEffect implements Effect {
 
+    /**
+     * Executes the effect, moving the specified player back to the starting tile (tile 1).
+     *
+     * @param player The player on whom the effect is executed.
+     * @param gameController The game controller managing the game state.
+     */
     @Override
     public void execute(Player player, GameController gameController) {
         gameController.movePlayer(player, 1);
     }
 
+    /**
+     * Returns the color associated with this effect, which is black.
+     * This can be used for visual representation in the UI.
+     *
+     * @return The Color black.
+     */
     @Override
     public Color getColor() {
         return Color.BLACK;

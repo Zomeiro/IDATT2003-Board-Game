@@ -20,6 +20,9 @@ import java.util.stream.IntStream;
  * Snakes and Ladders. It provides methods to list available board presets,
  * load boards from JSON files (by name or absolute path), and generate
  * random boards.
+ * 
+ * @author Bjørn Adam Vangen
+ * Gemini used to suggest idea and fix some problems
  */
 public final class BoardGameFactory {
 
@@ -47,22 +50,55 @@ public final class BoardGameFactory {
 
     private BoardGameFactory() { }
 
+    /**
+     * Lists the names of all available Snakes and Ladders board presets
+     * by querying the {@link JsonBoardRepository}.
+     *
+     * @return An unmodifiable list of strings, where each string is a preset board name.
+     */
     public static List<String> listSnLPresets() {
         return Collections.unmodifiableList(JsonBoardRepository.listSnLBoards());
     }
 
+    /**
+     * Creates a new {@link BoardGame} instance for Snakes and Ladders using a board
+     * loaded by its preset name from the {@link JsonBoardRepository}.
+     *
+     * @param preset     The name of the board preset to load.
+     * @param players    The list of players participating in the game.
+     * @param onGameWon  A {@link Consumer} callback to be executed when a player wins the game.
+     * @return A new, fully configured {@code BoardGame} instance.
+     */
     public static BoardGame createSnakesAndLadders(String preset, List<Player> players, Consumer<Player> onGameWon) {
         Board board = JsonBoardRepository.loadBoardByName(preset);
         GameConfig cfg = GameConfig.defaultConfig(players.size());
         return new BoardGame(board, players, cfg, onGameWon);
     }
 
+    /**
+     * Creates a new {@link BoardGame} instance for Snakes and Ladders using a board
+     * loaded from a JSON file specified by an absolute path, via the {@link JsonBoardRepository}.
+     *
+     * @param absolutePath The absolute file path to the JSON board definition.
+     * @param players      The list of players participating in the game.
+     * @param onGameWon    A {@link Consumer} callback to be executed when a player wins the game.
+     * @return A new, fully configured {@code BoardGame} instance.
+     */
     public static BoardGame createSnakesAndLaddersByAbsolutePath(String absolutePath, List<Player> players, Consumer<Player> onGameWon) {
         Board board = JsonBoardRepository.loadBoardByAbsolutePath(absolutePath);
         GameConfig cfg = GameConfig.defaultConfig(players.size());
         return new BoardGame(board, players, cfg, onGameWon);
     }
 
+    /**
+     * Creates a new {@link BoardGame} instance for Snakes and Ladders with a randomly generated board
+     * based on the specified difficulty level.
+     *
+     * @param difficulty The {@link Difficulty} level for the random board generation.
+     * @param players    The list of players participating in the game.
+     * @param onGameWon  A {@link Consumer} callback to be executed when a player wins the game.
+     * @return A new, fully configured {@code BoardGame} instance with a random board.
+     */
     public static BoardGame createRandomSnakesAndLadders(Difficulty difficulty, List<Player> players, Consumer<Player> onGameWon) {
         Board board = buildRandomSnL(difficulty);
         GameConfig cfg = GameConfig.defaultConfig(players.size());
@@ -90,7 +126,7 @@ public final class BoardGameFactory {
             return board;
         }
 
-        //from Gemini 
+        //from Gemini
         List<Integer> availableTiles = IntStream.rangeClosed(2, maxTileForEffect)
                 .boxed()
                 .collect(Collectors.toList());

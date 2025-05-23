@@ -12,12 +12,34 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
+/**
+ * Service responsible for initializing and starting a Snakes and Ladders game session.
+ * It extends {@link GameInitController} to use its player and board selection capabilities,
+ * then creates and launches the game using the {@link BoardGameFactory} and
+ * {@link GameInitializationService}.
+ * 
+ * @author Bjørn Adam Vangen
+ */
 public class SnakesAndLaddersInitializationService extends GameInitController {
 
+    /**
+     * Constructs a new SnakesAndLaddersInitializationService.
+     *
+     * @param primaryStage The primary stage of the JavaFX application, used for displaying scenes.
+     */
     public SnakesAndLaddersInitializationService(Stage primaryStage) {
         super(primaryStage);
     }
 
+    /**
+     * Overrides the base method to start a Snakes and Ladders game.
+     * This method retrieves selected players and board configuration (from absolute path,
+     * preset name, or random generation settings). It then validates the inputs,
+     * creates a {@link BoardGame} instance using {@link BoardGameFactory},
+     * sets up the game using {@link GameInitializationService}, and finally
+     * displays the {@link Ingame} scene. Error alerts are shown for invalid configurations
+     * or loading issues.
+     */
     @Override
     public void startGame() {
         ArrayList<Player> playerList = this.getCurrentPlayers();
@@ -29,7 +51,7 @@ public class SnakesAndLaddersInitializationService extends GameInitController {
 
         BoardGame boardGame = null;
         Consumer<Player> onGameWon = winner -> {
-            new WinnerView().showWinnerPopup(winner, primaryStage); 
+            new WinnerView().showWinnerPopup(winner, primaryStage);
         };
 
         try {

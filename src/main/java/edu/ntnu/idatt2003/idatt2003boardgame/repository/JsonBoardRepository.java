@@ -26,6 +26,9 @@ import edu.ntnu.idatt2003.idatt2003boardgame.model.effect.PlaceholderEffect;
  * Repository for loading Snakes and Ladders boards from JSON files.
  * Assumes each board is defined in its own JSON file within the
  * 'src/main/resources/edu/ntnu/idatt2003/idatt2003boardgame/boards/' directory.
+ * 
+ * @author Bjørn Adam Vangen
+ * @author Hector Mendana Morales
  */
 public class JsonBoardRepository {
 

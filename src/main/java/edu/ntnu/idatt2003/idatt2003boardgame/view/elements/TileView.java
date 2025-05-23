@@ -15,27 +15,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /**
- * <p>
- * A visual representation of a {@code Tile} in the board game. This component
- * is a {@code StackPane} that layers classic visual elements, such as:
- * </p>
- * <ul>
- * <li>A background color</li>
- * <li>The tile number</li>
- * </ul>
+ * A visual representation of a Tile in the board game. This component
+ * is a StackPane that layers classic visual elements, such as:
+ * - A background color
+ * - The tile number
  *
- * <p>
  * In cases where there are players in the tile, the following elements also
  * apply:
- * </p>
- * <ul>
- * <li>A player icon (if one player is present)</li>
- * <li>An overlay and player counter (if multiple players are present)</li>
- * </ul>
+ * - A player icon (if one player is present)
+ * - An overlay and player counter (if multiple players are present)
  *
- * <p>
- * The visual is updated using {@link #updateVisual()} based on the tile state.
- * </p>
+ * The visual is updated using the updateVisual() method based on the tile state.
  *
  * @author Hector Mendana Morales
  */
@@ -49,9 +39,9 @@ public class TileView extends StackPane {
     private final Label viewNumber;
 
     /**
-     * Constructs a new {@code TileVisual} based on paramet.
+     * Constructs a new TileView based on the provided Tile.
      *
-     * @param tile the {@code Tile} object this visual represents
+     * @param tile the Tile object this visual represents
      */
     public TileView(Tile tile) {
         this.tile = tile;
@@ -75,23 +65,17 @@ public class TileView extends StackPane {
     }
 
     /**
-     * <p>
      * Updates the visual elements of this tile based on its current state:
-     * <p>
      *
-     * <ul>
-     * <li>If the tile has an effect, the background becomes red.</li>
-     * <li>If one player is on the tile, their icon is shown.</li>
-     * <li>If multiple players are on the tile, a white overlay and a count are
-     * shown.</li>
-     *
-     * <li>If no players are present, the tile number is shown.</li>
-     * </ul>
+     * - If the tile has an effect, the background becomes red.
+     * - If one player is on the tile, their icon is shown.
+     * - If multiple players are on the tile, a white overlay and a count are shown.
+     * - If no players are present, the tile number is shown.
      */
     public void updateVisual() {
         if (tile.getEffect() != null) {
             this.background.setFill(tile.getEffect().getColor());
-            viewNumber.setTextFill(Color.WHITE);            
+            viewNumber.setTextFill(Color.WHITE);
         }
 
         List<Player> players = tile.getPlayers();
@@ -121,9 +105,9 @@ public class TileView extends StackPane {
     }
 
     /**
-     * Returns the {@code Tile} model associated with this visual.
+     * Returns the Tile model associated with this visual.
      *
-     * @return the {@code Tile} this visual represents
+     * @return the Tile this visual represents
      */
     public Tile getTile() {
         return tile;

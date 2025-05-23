@@ -15,6 +15,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Controls the game initialization process, managing player setup,
+ * board selection, and interaction with the {@link GameInitView}.
+ * It handles loading player data, selecting icons, and preparing
+ * the necessary configurations before starting a game.
+ * 
+ * @author Bjørn Adam Vangen
+ */
 public class GameInitController {
 
     private final String ICON_RELATIVE_PATH = "/edu/ntnu/idatt2003/idatt2003boardgame/PlayerIcons/";
@@ -27,12 +35,22 @@ public class GameInitController {
     protected String selectedBoardOption = null;
     protected String selectedFilePath = null;
 
+    /**
+     * Represents the types of games that can be selected or initialized.
+     */
     public enum GameType {
+        /** Snakes and Ladders game type. */
         SnL,
+        /** Ludo game type. */
         LUDO,
     }
     private GameType selectedGameType = GameType.SnL;
 
+    /**
+     * Constructs a GameInitController.
+     *
+     * @param primaryStage The primary stage of the JavaFX application.
+     */
     public GameInitController(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.view = new GameInitView(this.primaryStage);
@@ -43,9 +61,9 @@ public class GameInitController {
     private void init() {
         iconFileNames = playerDataAccess.getIconNames();
         view.init();
-        setupBoardSelection(); 
+        setupBoardSelection();
         addPlayer();
-        addPlayer(); 
+        addPlayer();
     }
 
     private void setupBoardSelection() {
@@ -93,7 +111,11 @@ public class GameInitController {
         }
     }
 
-
+    /**
+     * Adds a new player configuration field to the game initialization view.
+     * If the maximum number of players (currently 4) is reached, no new field is added.
+     * Populates the new field with default player names and an initial icon.
+     */
     public void addPlayer() {
         int index = playerIconIndexes.size();
         if (index >= 4) { //limit to 4 players
@@ -174,11 +196,24 @@ public class GameInitController {
     }
 
     //method should be overridden in subclasses
+    /**
+     * Placeholder method for starting the game.
+     * This base implementation indicates an error and is intended to be overridden
+     * by subclasses that define specific game starting procedures.
+     */
     public void startGame() {
         System.err.println("Base GameInitController.startGame() called - Should be overridden!");
         view.setStartGameButtonText("Error - Please Restart");
     }
 
+    /**
+     * Retrieves the list of currently configured players based on the selections
+     * made in the game initialization view.
+     *
+     * @return An {@link ArrayList} of {@link Player} objects. Returns {@code null} if no
+     * valid players are selected or if an error occurs during player creation.
+     * Duplicate player names are skipped.
+     */
     public ArrayList<Player> getCurrentPlayers() {
         ArrayList<Player> playerList = new ArrayList<>();
         List<ComboBox<String>> playerDropdowns = view.getPlayerDropdowns();
@@ -214,10 +249,18 @@ public class GameInitController {
         return playerList;
     }
 
+    /**
+     * Sets the type of game selected for initialization.
+     *
+     * @param type The {@link GameType} to set.
+     */
     public void setSelectedGameType(GameType type) {
         this.selectedGameType = type;
     }
 
+    /**
+     * Shows the game initialization view on the primary stage.
+     */
     public void start() {
         view.show();
     }

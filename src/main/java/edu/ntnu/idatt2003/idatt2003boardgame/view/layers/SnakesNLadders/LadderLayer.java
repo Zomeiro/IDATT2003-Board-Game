@@ -13,10 +13,26 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.transform.Rotate;
 
+/**
+ * A JavaFX Pane responsible for rendering visual representations of ladders and snakes
+ * on top of a BoardView. It calculates the position, length, and rotation
+ * for each ladder and snake based on their start and end tiles on the board.
+ * 
+ * @author Hector Mendana Morales
+ */
 public class LadderLayer extends Pane {
 
     private final BoardView boardView;
 
+    /**
+     * Constructs a new LadderLayer.
+     * This layer will draw all specified ladders and snakes onto itself,
+     * positioned relative to the provided BoardView.
+     *
+     * @param boardView The BoardView on which the tiles are laid out, used for coordinate calculations.
+     * @param tilesWithLadders A list of Tile objects that have LadderEffects.
+     * @param tilesWithSnakes A list of Tile objects that have SnakeEffects.
+     */
     public LadderLayer(BoardView boardView, List<Tile> tilesWithLadders, List<Tile> tilesWithSnakes) {
         this.boardView = boardView;
 
